@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="교육용 로드밸런서 동작 시각화 시뮬레이터" />
+  <title>Load Balancer Visual Simulator</title>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>Load Balancer Visual Simulator</h1>
+        <p class="subtitle">클라이언트 요청이 로드밸런서를 거쳐 여러 백엔드 서버로 분산되는 과정을 직접 확인하세요.</p>
+      </div>
+      <div class="hero-badge">HAProxy concept</div>
+    </header>
+
+    <section class="control-panel" aria-label="시뮬레이션 제어">
+      <div class="control-group algorithm-group">
+        <span class="control-label">Algorithm</span>
+        <div class="segmented" role="group" aria-label="로드밸런싱 알고리즘">
+          <button class="algo-btn active" data-algorithm="roundrobin" type="button">Round Robin</button>
+          <button class="algo-btn" data-algorithm="weighted" type="button">Weighted RR</button>
+          <button class="algo-btn" data-algorithm="leastconn" type="button">Least Connections</button>
+          <button class="algo-btn" data-algorithm="hash" type="button">Client Hash</button>
+        </div>
+      </div>
+
+      <div class="control-group speed-group">
+        <label class="control-label" for="speed">Traffic speed <strong id="speedLabel">1.0 req/s</strong></label>
+        <input id="speed" type="range" min="0.5" max="3" value="1" step="0.5" />
+      </div>
+
+      <div class="actions">
+        <button id="sendBtn" class="btn btn-secondary" type="button">Send request</button>
+        <button id="autoBtn" class="btn btn-primary" type="button" aria-pressed="false">▶ Start traffic</button>
+        <button id="resetBtn" class="btn btn-ghost" type="button">↺ Reset</button>
+      </div>
+    </section>
+
+    <section class="algorithm-note" aria-live="polite">
+      <div class="note-icon">i</div>
+      <div>
+        <strong id="algorithmTitle">Round Robin</strong>
+        <p id="algorithmDescription">정상 서버를 순서대로 선택합니다. 서버의 현재 부하나 처리 시간은 고려하지 않습니다.</p>
+      </div>
+    </section>
+
+    <section class="simulation-card">
+      <div class="simulation-head">
+        <div>
+          <span class="section-kicker">REQUEST FLOW</span>
+          <h2>요청 분산 과정</h2>
+        </div>
+        <div class="legend" aria-label="범례">
+          <span><i class="dot dot-request"></i>Request</span>
+          <span><i class="dot dot-response"></i>Response</span>
+          <span><i class="dot dot-down"></i>Server down</span>
+        </div>
+      </div>
+
+      <div id="stage" class="stage" aria-label="로드밸런서 시뮬레이션 영역">
+        <svg id="connections" class="connections" aria-hidden="true"></svg>
+        <div id="packetLayer" class="packet-layer" aria-hidden="true"></div>
+
+        <div class="column clients-column">
+          <p class="column-label">CLIENTS</p>
+          <div class="client-stack">
+            <button class="client-card active" data-client="A" type="button">
+              <span class="client-avatar">A</span>
+              <span><strong>Client A</strong><small>10.0.0.11</small></span>
+            </button>
+            <button class="client-card" data-client="B" type="button">
+              <span class="client-avatar">B</span>
+              <span><strong>Client B</strong><small>10.0.0.22</small></span>
+            </button>
+            <button class="client-card" data-client="C" type="button">
+              <span class="client-avatar">C</span>
+              <span><strong>Client C</strong><small>10.0.0.33</small></span>
+            </button>
+          </div>
+          <p class="hint">Client Hash에서는 선택한 클라이언트가 같은 서버로 전달됩니다.</p>
+        </div>
+
+        <div class="column lb-column">
+          <p class="column-label">LOAD BALANCER</p>
+          <div id="loadBalancer" class="lb-node">
+            <div class="lb-pulse"></div>
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M13 13h38v13H13zM13 38h38v13H13z" />
+              <circle cx="20" cy="19.5" r="2.5" />
+              <circle cx="20" cy="44.5" r="2.5" />
+              <path d="M28 19.5h16M28 44.5h16" />
+            </svg>
+            <strong>Load Balancer</strong>
+            <span id="lbStatus">Ready</span>
+          </div>
+        </div>
+
+        <div class="column servers-column">
+          <p class="column-label">BACKEND SERVERS</p>
+          <div id="serverList" class="server-stack"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <article class="stats-card">
+        <div class="card-head">
+          <div>
+            <span class="section-kicker">LIVE METRICS</span>
+            <h2>분산 결과</h2>
+          </div>
+          <strong id="totalRequests" class="big-number">0</strong>
+        </div>
+        <p class="muted">완료된 요청 기준</p>
+        <div id="bars" class="bars"></div>
+        <div class="metric-row">
+          <div><span>Active connections</span><strong id="activeConnections">0</strong></div>
+          <div><span>Failed requests</span><strong id="failedRequests">0</strong></div>
+        </div>
+      </article>
+
+      <article class="config-card">
+        <div class="card-head">
+          <div>
+            <span class="section-kicker">REAL-WORLD EXAMPLE</span>
+            <h2>HAProxy 설정 예시</h2>
+          </div>
+          <span class="config-badge">haproxy.cfg</span>
+        </div>
+        <pre><code id="haproxyConfig"></code></pre>
+        <p class="config-note">※ 이 페이지는 교육용 시뮬레이터이며 브라우저에서 실제 HAProxy를 실행하지 않습니다.</p>
+      </article>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
