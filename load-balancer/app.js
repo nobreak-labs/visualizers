@@ -16,7 +16,7 @@
     },
     hash: {
       title: 'Client Hash',
-      description: '클라이언트 식별값을 해시하여 서버를 선택합니다. 서버 구성이 같으면 같은 클라이언트가 같은 서버로 전달됩니다.'
+      description: '표시된 클라이언트 IP를 해시하여 서버를 선택합니다. 서버 구성이 같으면 같은 IP가 같은 서버로 전달됩니다.'
     }
   };
 
@@ -30,10 +30,11 @@
     leastTieIndex: 0,
     failed: 0,
     epoch: 0,
+    comparisonVisible: false,
     servers: [
-      { id: 1, name: 'Server 1', address: '10.0.1.11:80', up: true, weight: 1, active: 0, completed: 0, smoothCurrent: 0 },
-      { id: 2, name: 'Server 2', address: '10.0.1.12:80', up: true, weight: 1, active: 0, completed: 0, smoothCurrent: 0 },
-      { id: 3, name: 'Server 3', address: '10.0.1.13:80', up: true, weight: 1, active: 0, completed: 0, smoothCurrent: 0 }
+      { id: 1, name: 'Server 1', address: '10.0.1.11:80', up: true, weight: 1, processingMs: 1600, active: 0, completed: 0, smoothCurrent: 0 },
+      { id: 2, name: 'Server 2', address: '10.0.1.12:80', up: true, weight: 1, processingMs: 1600, active: 0, completed: 0, smoothCurrent: 0 },
+      { id: 3, name: 'Server 3', address: '10.0.1.13:80', up: true, weight: 1, processingMs: 1600, active: 0, completed: 0, smoothCurrent: 0 }
     ]
   };
 
@@ -50,10 +51,13 @@
   const autoBtn = $('#autoBtn');
   const sendBtn = $('#sendBtn');
   const resetBtn = $('#resetBtn');
+  const compareBtn = $('#compareBtn');
+  const comparisonResults = $('#comparisonResults');
+  const mobileFlow = $('#mobileFlow');
 
   function renderServers() {
     serverList.innerHTML = state.servers.map(server => `
-      <article class="server-card ${server.up ? '' : 'down'}" data-server-id="${server.id}">
+      <article class="server-card ${server.up ? '' : 'down'} ${server.active ? 'target' : ''}" data-server-id="${server.id}">
         <div class="server-top">
           <div class="server-name">
             <span class="server-icon">S${server.id}</span>
@@ -70,6 +74,11 @@
           <input id="weight-${server.id}" data-action="weight" data-server-id="${server.id}" type="range" min="1" max="5" step="1" value="${server.weight}" ${server.up ? '' : 'disabled'}>
           <span class="weight-value">${server.weight}</span>
         </div>
+        <div class="processing-row">
+          <label for="processing-${server.id}">처리 시간</label>
+          <input id="processing-${server.id}" data-action="processing" data-server-id="${server.id}" type="range" min="800" max="4000" step="400" value="${server.processingMs}">
+          <span class="processing-value">${(server.processingMs / 1000).toFixed(1)}s</span>
+        </div>
       </article>
     `).join('');
 
@@ -84,13 +93,21 @@
         renderServers();
         renderStats();
         renderConfig();
+        renderComparison();
         requestAnimationFrame(drawConnections);
+      });
+    });
+    serverList.querySelectorAll('[data-action="processing"]').forEach(input => {
+      input.addEventListener('input', () => {
+        getServer(Number(input.dataset.serverId)).processingMs = Number(input.value);
+        input.nextElementSibling.textContent = `${(Number(input.value) / 1000).toFixed(1)}s`;
+        renderComparison();
       });
     });
   }
 
   function getServer(id) { return state.servers.find(s => s.id === id); }
-  function healthyServers() { return state.servers.filter(s => s.up); }
+  function healthyServers(servers) { return servers.filter(s => s.up); }
 
   function toggleServer(id) {
     const server = getServer(id);
@@ -99,6 +116,7 @@
     renderServers();
     renderStats();
     renderConfig();
+    renderComparison();
     requestAnimationFrame(drawConnections);
   }
 
@@ -111,17 +129,17 @@
     return h >>> 0;
   }
 
-  function chooseServer(clientId) {
-    const healthy = healthyServers();
+  function chooseServer(clientIp, algorithm = state.algorithm, servers = state.servers, routing = state) {
+    const healthy = healthyServers(servers);
     if (!healthy.length) return null;
 
-    if (state.algorithm === 'roundrobin') {
-      const server = healthy[state.rrIndex % healthy.length];
-      state.rrIndex = (state.rrIndex + 1) % Math.max(healthy.length, 1);
+    if (algorithm === 'roundrobin') {
+      const server = healthy[routing.rrIndex % healthy.length];
+      routing.rrIndex = (routing.rrIndex + 1) % healthy.length;
       return server;
     }
 
-    if (state.algorithm === 'weighted') {
+    if (algorithm === 'weighted') {
       const totalWeight = healthy.reduce((sum, s) => sum + s.weight, 0);
       let best = null;
       for (const server of healthy) {
@@ -132,20 +150,55 @@
       return best;
     }
 
-    if (state.algorithm === 'leastconn') {
+    if (algorithm === 'leastconn') {
       const minActive = Math.min(...healthy.map(s => s.active / Math.max(s.weight, 1)));
       const tied = healthy.filter(s => Math.abs((s.active / Math.max(s.weight, 1)) - minActive) < 1e-9);
-      const server = tied[state.leastTieIndex % tied.length];
-      state.leastTieIndex++;
+      const server = tied[routing.leastTieIndex % tied.length];
+      routing.leastTieIndex++;
       return server;
     }
 
-    if (state.algorithm === 'hash') {
-      const index = hashString(clientId) % healthy.length;
+    if (algorithm === 'hash') {
+      const index = hashString(clientIp) % healthy.length;
       return healthy[index];
     }
 
     return healthy[0];
+  }
+
+  function renderComparison() {
+    if (!state.comparisonVisible) return;
+
+    const clients = $$('.client-card').map(card => ({ id: card.dataset.client, ip: card.dataset.ip }));
+    const rows = Object.entries(algorithms).map(([algorithm, details]) => {
+      const servers = state.servers.map(server => ({ ...server, active: 0, smoothCurrent: 0 }));
+      const routing = { rrIndex: 0, leastTieIndex: 0 };
+      const counts = Object.fromEntries(servers.map(server => [server.id, 0]));
+      let inFlight = [];
+      const routes = [];
+
+      for (let i = 0; i < 10; i++) {
+        const now = i * autoDelay();
+        inFlight = inFlight.filter(({ server, finishesAt }) => {
+          if (finishesAt > now) return true;
+          server.active--;
+          return false;
+        });
+        const client = clients[i % clients.length];
+        const server = chooseServer(client.ip, algorithm, servers, routing);
+        routes.push(`${client.id}:${server ? `S${server.id}` : '실패'}`);
+        if (server) {
+          server.active++;
+          counts[server.id]++;
+          inFlight.push({ server, finishesAt: now + server.processingMs });
+        }
+      }
+
+      return `<tr><th scope="row">${details.title}</th>${servers.map(server => `<td>${counts[server.id]}</td>`).join('')}<td>${routes.join(' → ')}</td></tr>`;
+    });
+
+    comparisonResults.innerHTML = `<table><thead><tr><th scope="col">알고리즘</th>${state.servers.map(server => `<th scope="col">S${server.id}</th>`).join('')}<th scope="col">요청별 배정</th></tr></thead><tbody>${rows.join('')}</tbody></table>`;
+    comparisonResults.hidden = false;
   }
 
   function pointFor(el, parentRect) {
@@ -238,12 +291,14 @@
   async function sendRequest() {
     const epoch = state.epoch;
     const clientId = state.selectedClient;
-    const server = chooseServer(clientId);
-    state.requestSequence++;
+    const clientIp = document.querySelector(`.client-card[data-client="${clientId}"]`).dataset.ip;
+    const server = chooseServer(clientIp);
+    const requestId = ++state.requestSequence;
 
     if (!server) {
       state.failed++;
       $('#lbStatus').textContent = 'No healthy backend';
+      mobileFlow.textContent = `Client ${clientId} → Load Balancer → 요청 실패 (정상 서버 없음)`;
       loadBalancer.classList.add('receiving');
       setTimeout(() => loadBalancer.classList.remove('receiving'), 340);
       renderStats();
@@ -255,10 +310,9 @@
     renderStats();
     requestAnimationFrame(drawConnections);
 
-    const targetCard = document.querySelector(`.server-card[data-server-id="${server.id}"]`);
-    targetCard?.classList.add('target');
     loadBalancer.classList.add('receiving');
     $('#lbStatus').textContent = `Routing → ${server.name}`;
+    mobileFlow.textContent = `Client ${clientId} (${clientIp}) → Load Balancer → ${server.name} 처리 중`;
     setTimeout(() => loadBalancer.classList.remove('receiving'), 340);
 
     if (window.innerWidth > 650) {
@@ -268,7 +322,7 @@
       await animatePacket([from, lb.center, to], 760);
     }
 
-    const processingMs = 1100 + ((state.requestSequence * 977 + server.id * 613) % 3600);
+    if (epoch !== state.epoch) return;
     setTimeout(async () => {
       if (epoch !== state.epoch) return;
       if (server.active > 0) server.active--;
@@ -276,9 +330,8 @@
       renderServers();
       renderStats();
       requestAnimationFrame(drawConnections);
-      const currentCard = document.querySelector(`.server-card[data-server-id="${server.id}"]`);
-      currentCard?.classList.remove('target');
-      $('#lbStatus').textContent = state.autoRunning ? 'Distributing traffic' : 'Ready';
+      $('#lbStatus').textContent = state.autoRunning ? 'Distributing traffic' : (state.servers.some(s => s.active) ? 'Processing requests' : 'Ready');
+      if (requestId === state.requestSequence) mobileFlow.textContent = `${server.name} → Load Balancer → Client ${clientId} 응답 완료`;
 
       if (window.innerWidth > 650 && server.up) {
         const lb = lbPoints();
@@ -286,7 +339,7 @@
         const toClient = pathPointFromClient(clientId);
         await animatePacket([fromServer, lb.center, toClient], 620, true);
       }
-    }, processingMs);
+    }, server.processingMs);
   }
 
   function renderStats() {
@@ -316,8 +369,8 @@
 
     const servers = state.servers.map(s => {
       const weight = (state.algorithm === 'weighted' || state.algorithm === 'leastconn') ? ` weight ${s.weight}` : '';
-      const disabled = s.up ? '' : '  # simulator: DOWN';
-      return `    server web${String(s.id).padStart(2, '0')} ${s.address} check${weight}${disabled}`;
+      const statusNote = s.up ? '' : '  # 시뮬레이터 상태: DOWN (설정 명령 아님)';
+      return `    server web${String(s.id).padStart(2, '0')} ${s.address} check${weight}${statusNote}`;
     }).join('\n');
 
     $('#haproxyConfig').textContent = `backend web\n    ${balanceLine}\n\n${servers}`;
@@ -366,9 +419,18 @@
     state.rrIndex = 0;
     state.leastTieIndex = 0;
     state.failed = 0;
+    state.selectedClient = 'A';
+    state.comparisonVisible = false;
+    speed.value = '1';
+    speedLabel.textContent = '1.0 req/s';
+    mobileFlow.textContent = '요청을 보내면 이동 경로가 여기에 표시됩니다.';
+    comparisonResults.hidden = true;
+    comparisonResults.innerHTML = '';
+    $$('.client-card').forEach(btn => btn.classList.toggle('active', btn.dataset.client === 'A'));
     state.servers.forEach(s => {
-      s.up = true; s.weight = 1; s.active = 0; s.completed = 0; s.smoothCurrent = 0;
+      s.up = true; s.weight = 1; s.processingMs = 1600; s.active = 0; s.completed = 0; s.smoothCurrent = 0;
     });
+    setAlgorithm('roundrobin');
     packetLayer.innerHTML = '';
     renderServers();
     renderStats();
@@ -384,6 +446,7 @@
 
   speed.addEventListener('input', () => {
     speedLabel.textContent = `${Number(speed.value).toFixed(1)} req/s`;
+    renderComparison();
     if (state.autoRunning) {
       clearTimeout(state.autoTimer);
       state.autoTimer = setTimeout(() => {
@@ -398,6 +461,10 @@
   sendBtn.addEventListener('click', sendRequest);
   autoBtn.addEventListener('click', () => state.autoRunning ? stopAuto() : startAuto());
   resetBtn.addEventListener('click', reset);
+  compareBtn.addEventListener('click', () => {
+    state.comparisonVisible = true;
+    renderComparison();
+  });
   window.addEventListener('resize', () => requestAnimationFrame(drawConnections));
 
   renderServers();

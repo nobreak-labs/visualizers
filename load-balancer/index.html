@@ -70,20 +70,20 @@
         <div class="column clients-column">
           <p class="column-label">CLIENTS</p>
           <div class="client-stack">
-            <button class="client-card active" data-client="A" type="button">
+            <button class="client-card active" data-client="A" data-ip="10.0.0.11" type="button">
               <span class="client-avatar">A</span>
               <span><strong>Client A</strong><small>10.0.0.11</small></span>
             </button>
-            <button class="client-card" data-client="B" type="button">
+            <button class="client-card" data-client="B" data-ip="10.0.0.22" type="button">
               <span class="client-avatar">B</span>
               <span><strong>Client B</strong><small>10.0.0.22</small></span>
             </button>
-            <button class="client-card" data-client="C" type="button">
+            <button class="client-card" data-client="C" data-ip="10.0.0.33" type="button">
               <span class="client-avatar">C</span>
               <span><strong>Client C</strong><small>10.0.0.33</small></span>
             </button>
           </div>
-          <p class="hint">Client Hash에서는 선택한 클라이언트가 같은 서버로 전달됩니다.</p>
+          <p class="hint">Client Hash는 표시된 IP를 기준으로 합니다. 서버 구성이 바뀌면 배정도 달라질 수 있습니다.</p>
         </div>
 
         <div class="column lb-column">
@@ -106,6 +106,7 @@
           <div id="serverList" class="server-stack"></div>
         </div>
       </div>
+      <p id="mobileFlow" class="mobile-flow" aria-live="polite">요청을 보내면 이동 경로가 여기에 표시됩니다.</p>
     </section>
 
     <section class="lower-grid">
@@ -136,6 +137,18 @@
         <pre><code id="haproxyConfig"></code></pre>
         <p class="config-note">※ 이 페이지는 교육용 시뮬레이터이며 브라우저에서 실제 HAProxy를 실행하지 않습니다.</p>
       </article>
+    </section>
+
+    <section class="comparison-card" aria-labelledby="comparisonTitle">
+      <div class="comparison-head">
+        <div>
+          <span class="section-kicker">ALGORITHM COMPARISON</span>
+          <h2 id="comparisonTitle">같은 요청으로 비교</h2>
+        </div>
+        <button id="compareBtn" class="btn btn-secondary" type="button">요청 10건 비교</button>
+      </div>
+      <p class="comparison-note">현재 서버 설정으로 A, B, C의 요청 10건을 각 알고리즘에 같은 순서와 간격으로 보냅니다. 서버별 처리 시간을 바꾸면 Least Connections의 차이를 볼 수 있습니다.</p>
+      <div id="comparisonResults" class="comparison-results" hidden></div>
     </section>
   </main>
 
