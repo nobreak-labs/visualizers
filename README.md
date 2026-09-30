@@ -1,10 +1,10 @@
 # Nobreak Labs - Visualizers
 
-브라우저에서 실행하는 교육용 시각화 도구 모음입니다. 로컬에서는 루트 `index.html`을 브라우저로 열면 됩니다.
+브라우저에서 실행하는 교육용 시각화 도구 모음입니다.
 
 ## 시각화 도구
 
-- [Load Balancer](load-balancer/index.html) — 로드밸런싱 알고리즘과 요청 흐름 시뮬레이터
+- [Load Balancer](load-balancer/) — 로드밸런싱 알고리즘과 요청 흐름 시뮬레이터
 
 ## 공통 스타일 관리
 
