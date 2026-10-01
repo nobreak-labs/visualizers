@@ -1,23 +1,31 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Nobreak Labs의 교육용 인터랙티브 시각화 도구 모음" />
   <title>Visualizers | Nobreak Labs</title>
+  <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/common.css" />
   <link rel="stylesheet" href="assets/css/home.css" />
 </head>
 <body>
   <main>
-    <p class="eyebrow">NOBREAK LABS</p>
+    <div class="home-top"><p class="eyebrow">NOBREAK LABS</p><button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button></div>
     <h1>Visualizers</h1>
     <p class="intro">직접 조작하며 개념을 살펴볼 수 있는 시각화 도구 모음입니다.</p>
-    <a class="card" href="./load-balancer/index.html">
-      <h2>Load Balancer</h2>
-      <p>Round Robin, Weighted Round Robin, Least Connections, Client Hash 방식으로 요청이 분산되는 과정을 확인해 보세요.</p>
-      <span>시뮬레이터 열기 →</span>
-    </a>
+    <section class="visualizer-grid" aria-label="시각화 도구">
+      <a class="card" href="./load-balancer/index.html">
+        <h2>Load Balancer</h2>
+        <p>Round Robin, Weighted Round Robin, Least Connections, Client Hash 방식으로 요청이 분산되는 과정을 확인해 보세요.</p>
+        <span>시뮬레이터 열기 →</span>
+      </a>
+      <a class="card" href="./kubernetes/index.html">
+        <h2>Kubernetes Architecture</h2>
+        <p>컨트롤 플레인과 워커 노드, CRI와 CNI의 관계를 방향키로 넘기며 살펴보세요.</p>
+        <span>아키텍처 보기 →</span>
+      </a>
+    </section>
   </main>
 </body>
 </html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="컨트롤 플레인, 워커 노드, CRI와 CNI를 살펴보는 쿠버네티스 아키텍처 시각화" />
+  <title>Kubernetes Architecture | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div>
+        <a class="back-link" href="../index.html">← Visualizers</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>Kubernetes Architecture</h1>
+        <p class="subtitle">방향키로 화면을 넘기고, 단일 구성에서는 구성요소를 클릭해 클러스터의 동작을 살펴보세요.</p>
+      </div>
+      <div class="topbar-side">
+        <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+        <div class="topbar-meta" aria-label="다이어그램 범례">
+          <span><i class="legend-dot control"></i>Control plane</span>
+          <span><i class="legend-dot node"></i>Worker node</span>
+          <span><i class="legend-line"></i>주요 통신·호출 경로</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <section class="diagram" aria-labelledby="diagram-title">
+        <div class="diagram-heading">
+          <div>
+            <span class="section-kicker">CLUSTER MAP</span>
+            <h2 id="diagram-title">클러스터 구성도</h2>
+          </div>
+          <div class="diagram-actions"><span class="diagram-mode" id="diagramMode">단일 컨트롤 플레인</span><span class="diagram-tip">← ↑ 이전 · 다음 ↓ →</span></div>
+        </div>
+
+        <div class="diagram-stage" id="diagramStage">
+          <svg class="wires" id="wires" aria-hidden="true"></svg>
+
+          <div class="entry-area">
+            <button class="component entry-card" data-component="kubectl" data-anchor="kubectl" type="button">
+              <span><strong>kubectl</strong><small>사용자 · 자동화</small></span>
+            </button>
+            <div class="external-cloud"><button class="component entry-card cloud-provider-card" data-component="provider" data-anchor="provider" type="button"><span><strong>Cloud provider API</strong><small>클러스터 외부 인프라</small></span></button></div>
+          </div>
+
+          <div class="cluster-boundary">
+            <div class="cluster-title"><img class="cluster-symbol" src="icons/kubernetes.svg" alt="" aria-hidden="true" /><span>KUBERNETES CLUSTER</span><span class="cluster-count" id="clusterCount">1 CONTROL PLANE · 2 NODES</span></div>
+            <div class="control-plane area-box" id="singleControlPlane">
+              <div class="area-header"><span class="area-label">CONTROL PLANE</span><span class="area-subtitle">클러스터의 상태를 결정하고 유지</span></div>
+              <div class="cp-grid">
+                <button class="component cp-primary" data-component="apiserver" data-anchor="apiserver" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong><small>모든 요청의 관문</small></button>
+                <button class="component" data-component="etcd" data-anchor="etcd" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd</strong><small>클러스터 상태 저장</small></button>
+                <button class="component" data-component="scheduler" data-anchor="scheduler" type="button"><img class="official-icon" src="icons/scheduler.svg" alt="" aria-hidden="true" /><strong>kube-scheduler</strong><small>Pod의 노드 선택</small></button>
+                <button class="component" data-component="controller" data-anchor="controller" type="button"><img class="official-icon" src="icons/controller-manager.svg" alt="" aria-hidden="true" /><strong>kube-controller-manager</strong><small>원하는 상태로 조정</small></button>
+                <button class="component optional cp-cloud" data-component="cloud" data-anchor="cloud-single" type="button"><img class="official-icon" src="icons/cloud-controller-manager.svg" alt="" aria-hidden="true" /><strong>cloud-controller-manager</strong><small>클라우드 연동 · 선택</small></button>
+              </div>
+            </div>
+            <div class="ha-control-plane area-box" id="haControlPlane" hidden>
+              <div class="area-header"><span class="area-label">HA CONTROL PLANE · 3 INSTANCES</span><span class="area-subtitle" id="haSubtitle">각 컨트롤 플레인에 etcd 멤버 배치</span></div>
+              <button class="component ha-load-balancer" data-component="api-lb" data-anchor="api-lb" type="button"><span class="component-glyph text-badge">LB</span><strong>API load balancer</strong><small>controlPlaneEndpoint · :6443</small></button>
+              <div class="ha-members">
+                <article class="ha-member" aria-label="Control Plane 1"><div class="ha-member-heading"><span class="node-indicator"></span><strong>Control Plane 1</strong></div><button class="component" data-component="apiserver" data-anchor="apiserver-1" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong></button><button class="component" data-component="scheduler" data-anchor="scheduler-1" type="button"><img class="official-icon" src="icons/scheduler.svg" alt="" aria-hidden="true" /><strong>kube-scheduler</strong></button><button class="component" data-component="controller" data-anchor="controller-1" type="button"><img class="official-icon" src="icons/controller-manager.svg" alt="" aria-hidden="true" /><strong>kube-controller-manager</strong></button><button class="component optional ha-cloud" data-component="cloud" data-anchor="cloud-1" type="button"><img class="official-icon" src="icons/cloud-controller-manager.svg" alt="" aria-hidden="true" /><strong>cloud-controller-manager</strong><small>클라우드 연동 · 선택</small></button><button class="component ha-stacked-etcd" data-component="etcd" data-anchor="etcd-stack-1" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 1</strong></button></article>
+                <article class="ha-member" aria-label="Control Plane 2"><div class="ha-member-heading"><span class="node-indicator"></span><strong>Control Plane 2</strong></div><button class="component" data-component="apiserver" data-anchor="apiserver-2" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong></button><button class="component" data-component="scheduler" data-anchor="scheduler-2" type="button"><img class="official-icon" src="icons/scheduler.svg" alt="" aria-hidden="true" /><strong>kube-scheduler</strong></button><button class="component" data-component="controller" data-anchor="controller-2" type="button"><img class="official-icon" src="icons/controller-manager.svg" alt="" aria-hidden="true" /><strong>kube-controller-manager</strong></button><button class="component optional ha-cloud" data-component="cloud" data-anchor="cloud-2" type="button"><img class="official-icon" src="icons/cloud-controller-manager.svg" alt="" aria-hidden="true" /><strong>cloud-controller-manager</strong><small>클라우드 연동 · 선택</small></button><button class="component ha-stacked-etcd" data-component="etcd" data-anchor="etcd-stack-2" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 2</strong></button></article>
+                <article class="ha-member" aria-label="Control Plane 3"><div class="ha-member-heading"><span class="node-indicator"></span><strong>Control Plane 3</strong></div><button class="component" data-component="apiserver" data-anchor="apiserver-3" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong></button><button class="component" data-component="scheduler" data-anchor="scheduler-3" type="button"><img class="official-icon" src="icons/scheduler.svg" alt="" aria-hidden="true" /><strong>kube-scheduler</strong></button><button class="component" data-component="controller" data-anchor="controller-3" type="button"><img class="official-icon" src="icons/controller-manager.svg" alt="" aria-hidden="true" /><strong>kube-controller-manager</strong></button><button class="component optional ha-cloud" data-component="cloud" data-anchor="cloud-3" type="button"><img class="official-icon" src="icons/cloud-controller-manager.svg" alt="" aria-hidden="true" /><strong>cloud-controller-manager</strong><small>클라우드 연동 · 선택</small></button><button class="component ha-stacked-etcd" data-component="etcd" data-anchor="etcd-stack-3" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 3</strong></button></article>
+              </div>
+              <span class="ha-etcd-meta" id="stackedEtcdMeta" hidden>3 MEMBERS · QUORUM 2/3</span>
+            </div>
+            <div class="etcd-cluster" id="externalEtcdCluster" hidden><div class="etcd-heading"><span class="area-label">EXTERNAL ETCD CLUSTER</span></div><div class="etcd-members"><button class="component" data-component="etcd" data-anchor="etcd-1" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 1</strong></button><button class="component" data-component="etcd" data-anchor="etcd-2" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 2</strong></button><button class="component" data-component="etcd" data-anchor="etcd-3" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 3</strong></button></div><span class="etcd-meta">3 MEMBERS · QUORUM 2/3</span></div>
+
+            <div class="node-section-heading"><span class="area-label">WORKER NODES</span><span class="area-subtitle">Pod와 컨테이너가 실제로 실행되는 곳</span></div>
+            <div class="nodes">
+              <article class="worker-node area-box" aria-label="Worker Node A">
+                <div class="node-header"><strong>Worker Node A</strong></div>
+                <div class="node-components">
+                  <button class="component" data-component="kubelet" data-anchor="kubelet-a" type="button"><img class="official-icon" src="icons/kubelet.svg" alt="" aria-hidden="true" /><strong>kubelet</strong><small>Pod 실행 상태 관리</small></button>
+                  <button class="component optional" data-component="proxy" data-anchor="proxy-a" type="button"><img class="official-icon" src="icons/kube-proxy.svg" alt="" aria-hidden="true" /><strong>kube-proxy</strong><small>Service 트래픽 규칙 · 선택</small></button>
+                  <div class="runtime-stack">
+                    <button class="component interface" data-component="cri" data-anchor="cri-a" type="button"><span class="component-glyph text-badge">CRI</span><strong>CRI</strong><small>런타임 인터페이스</small></button>
+                    <button class="component" data-component="runtime" data-anchor="runtime-a" type="button"><span class="component-glyph text-badge">RT</span><strong>Container runtime</strong><small>containerd / CRI-O</small></button>
+                    <button class="component interface" data-component="cni" data-anchor="cni-a" type="button"><span class="component-glyph text-badge">CNI</span><strong>CNI plugin</strong><small>Pod 네트워크 구성</small></button>
+                  </div>
+                  <div class="pod-row"><button class="component pod" data-component="pod" data-anchor="pod-a1" type="button"><img class="official-icon pod-icon" src="icons/pod.svg" alt="" aria-hidden="true" /><strong>Pod</strong><small>app container</small></button><button class="component pod" data-component="pod" data-anchor="pod-a2" type="button"><img class="official-icon pod-icon" src="icons/pod.svg" alt="" aria-hidden="true" /><strong>Pod</strong><small>app container</small></button></div>
+                </div>
+              </article>
+              <article class="worker-node area-box" aria-label="Worker Node B">
+                <div class="node-header"><strong>Worker Node B</strong></div>
+                <div class="node-components">
+                  <button class="component" data-component="kubelet" data-anchor="kubelet-b" type="button"><img class="official-icon" src="icons/kubelet.svg" alt="" aria-hidden="true" /><strong>kubelet</strong><small>Pod 실행 상태 관리</small></button>
+                  <button class="component optional" data-component="proxy" data-anchor="proxy-b" type="button"><img class="official-icon" src="icons/kube-proxy.svg" alt="" aria-hidden="true" /><strong>kube-proxy</strong><small>Service 트래픽 규칙 · 선택</small></button>
+                  <div class="runtime-stack">
+                    <button class="component interface" data-component="cri" data-anchor="cri-b" type="button"><span class="component-glyph text-badge">CRI</span><strong>CRI</strong><small>런타임 인터페이스</small></button>
+                    <button class="component" data-component="runtime" data-anchor="runtime-b" type="button"><span class="component-glyph text-badge">RT</span><strong>Container runtime</strong><small>containerd / CRI-O</small></button>
+                    <button class="component interface" data-component="cni" data-anchor="cni-b" type="button"><span class="component-glyph text-badge">CNI</span><strong>CNI plugin</strong><small>Pod 네트워크 구성</small></button>
+                  </div>
+                  <div class="pod-row"><button class="component pod" data-component="pod" data-anchor="pod-b1" type="button"><img class="official-icon pod-icon" src="icons/pod.svg" alt="" aria-hidden="true" /><strong>Pod</strong><small>app container</small></button><button class="component pod" data-component="pod" data-anchor="pod-b2" type="button"><img class="official-icon pod-icon" src="icons/pod.svg" alt="" aria-hidden="true" /><strong>Pod</strong><small>app container</small></button></div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+        <p class="diagram-footnote">교육용 개념도입니다. 구성요소의 실제 배치와 네트워크 구현은 클러스터마다 다를 수 있습니다.</p>
+      </section>
+
+      <aside class="inspector" aria-labelledby="inspector-heading">
+        <div class="inspector-top"><span class="section-kicker">ARCHITECTURE SLIDES</span><span class="inspector-index" id="inspectorIndex">01 / 16</span></div>
+        <div class="inspector-content" aria-live="polite">
+          <span class="inspector-icon" id="inspectorIcon"><img src="icons/kubernetes.svg" alt="" aria-hidden="true" /></span>
+          <p class="inspector-category" id="inspectorCategory">OVERVIEW</p>
+          <h2 id="inspector-heading">Kubernetes cluster</h2>
+          <p class="inspector-description" id="inspectorDescription">컨트롤 플레인은 원하는 상태를 결정하고, 워커 노드는 Pod를 실제로 실행합니다. 구성요소를 선택하면 역할과 연결 관계를 볼 수 있습니다.</p>
+          <div class="inspector-detail"><span>핵심 관계</span><p id="inspectorRelation">kubectl → API server → 노드의 kubelet → Pod</p></div>
+        </div>
+        <div class="slide-navigation" aria-label="화면 이동"><button id="prevSlide" type="button" aria-label="이전 화면">← <span>이전</span></button><div class="slide-progress" id="slideProgress" aria-hidden="true"></div><button id="nextSlide" type="button" aria-label="다음 화면"><span>다음</span> →</button></div>
+        <div class="inspector-bottom"><span class="pulse-dot"></span><span id="inspectorHint">방향키 또는 카드 클릭으로 탐색</span></div>
+      </aside>
+    </div>
+
+    <footer class="sources">참고: <a href="https://kubernetes.io/docs/concepts/overview/components/" target="_blank" rel="noopener noreferrer">Kubernetes Components ↗</a><a href="https://kubernetes.io/docs/concepts/architecture/" target="_blank" rel="noopener noreferrer">Cluster Architecture ↗</a><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/ha-topology/" target="_blank" rel="noopener noreferrer">HA topology ↗</a><a href="https://etcd.io/docs/v3.5/op-guide/hardware/" target="_blank" rel="noopener noreferrer">etcd disk I/O ↗</a><a href="https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/" target="_blank" rel="noopener noreferrer">Cilium proxy replacement ↗</a><a href="https://github.com/kubernetes/community/tree/main/icons" target="_blank" rel="noopener noreferrer">Kubernetes Icons ↗</a></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
