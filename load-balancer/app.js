@@ -12,12 +12,18 @@
     },
     leastconn: {
       title: 'Least Connections',
-      description: '현재 처리 중인 연결이 가장 적은 정상 서버를 선택합니다. 요청 처리 시간이 서로 다를 때 차이가 잘 보입니다.'
+      description: '정상 서버의 활성 연결 수를 Weight로 나눈 값을 비교합니다. Weight가 같다면 연결이 가장 적은 서버를 선택하며, 처리 시간이 다를 때 차이가 잘 보입니다.'
     },
     hash: {
       title: 'Client Hash',
       description: '표시된 클라이언트 IP를 해시하여 서버를 선택합니다. 서버 구성이 같으면 같은 IP가 같은 서버로 전달됩니다.'
     }
+  };
+  const algorithmSlugs = {
+    roundrobin: 'round-robin',
+    weighted: 'weighted-round-robin',
+    leastconn: 'least-connections',
+    hash: 'client-hash'
   };
 
   const state = {
@@ -54,9 +60,11 @@
   const compareBtn = $('#compareBtn');
   const comparisonResults = $('#comparisonResults');
   const mobileFlow = $('#mobileFlow');
+  let algorithmInitialized = false;
 
   function renderServers() {
-    serverList.innerHTML = state.servers.map(server => `
+    if (!serverList.children.length) {
+      serverList.innerHTML = state.servers.map(server => `
       <article class="server-card ${server.up ? '' : 'down'} ${server.active ? 'target' : ''}" data-server-id="${server.id}">
         <div class="server-top">
           <div class="server-name">
@@ -80,29 +88,47 @@
           <span class="processing-value">${(server.processingMs / 1000).toFixed(1)}s</span>
         </div>
       </article>
-    `).join('');
+      `).join('');
 
-    serverList.querySelectorAll('[data-action="toggle-server"]').forEach(btn => {
-      btn.addEventListener('click', () => toggleServer(Number(btn.dataset.serverId)));
-    });
-    serverList.querySelectorAll('[data-action="weight"]').forEach(input => {
-      input.addEventListener('input', () => {
-        const server = getServer(Number(input.dataset.serverId));
-        server.weight = Number(input.value);
-        server.smoothCurrent = 0;
-        renderServers();
-        renderStats();
-        renderConfig();
-        renderComparison();
-        requestAnimationFrame(drawConnections);
+      serverList.querySelectorAll('[data-action="toggle-server"]').forEach(btn => {
+        btn.addEventListener('click', () => toggleServer(Number(btn.dataset.serverId)));
       });
-    });
-    serverList.querySelectorAll('[data-action="processing"]').forEach(input => {
-      input.addEventListener('input', () => {
-        getServer(Number(input.dataset.serverId)).processingMs = Number(input.value);
-        input.nextElementSibling.textContent = `${(Number(input.value) / 1000).toFixed(1)}s`;
-        renderComparison();
+      serverList.querySelectorAll('[data-action="weight"]').forEach(input => {
+        input.addEventListener('input', () => {
+          const server = getServer(Number(input.dataset.serverId));
+          server.weight = Number(input.value);
+          server.smoothCurrent = 0;
+          input.nextElementSibling.textContent = String(server.weight);
+          renderConfig();
+          renderComparison();
+        });
       });
+      serverList.querySelectorAll('[data-action="processing"]').forEach(input => {
+        input.addEventListener('input', () => {
+          getServer(Number(input.dataset.serverId)).processingMs = Number(input.value);
+          input.nextElementSibling.textContent = `${(Number(input.value) / 1000).toFixed(1)}s`;
+          renderComparison();
+        });
+      });
+    }
+
+    state.servers.forEach(server => {
+      const card = serverList.querySelector(`[data-server-id="${server.id}"]`);
+      card.classList.toggle('down', !server.up);
+      card.classList.toggle('target', server.active > 0);
+      const status = card.querySelector('.status-btn');
+      status.textContent = server.up ? 'UP' : 'DOWN';
+      status.setAttribute('aria-pressed', String(!server.up));
+      const [active, completed] = card.querySelectorAll('.server-metrics strong');
+      active.textContent = server.active;
+      completed.textContent = server.completed;
+      const weight = card.querySelector('[data-action="weight"]');
+      weight.disabled = !server.up;
+      if (Number(weight.value) !== server.weight) weight.value = String(server.weight);
+      card.querySelector('.weight-value').textContent = server.weight;
+      const processing = card.querySelector('[data-action="processing"]');
+      if (Number(processing.value) !== server.processingMs) processing.value = String(server.processingMs);
+      card.querySelector('.processing-value').textContent = `${(server.processingMs / 1000).toFixed(1)}s`;
     });
   }
 
@@ -288,7 +314,7 @@
     });
   }
 
-  async function sendRequest() {
+  function sendRequest() {
     const epoch = state.epoch;
     const clientId = state.selectedClient;
     const clientIp = document.querySelector(`.client-card[data-client="${clientId}"]`).dataset.ip;
@@ -319,11 +345,10 @@
       const from = pathPointFromClient(clientId);
       const lb = lbPoints();
       const to = serverPoint(server.id);
-      await animatePacket([from, lb.center, to], 760);
+      animatePacket([from, lb.center, to], 600);
     }
 
-    if (epoch !== state.epoch) return;
-    setTimeout(async () => {
+    setTimeout(() => {
       if (epoch !== state.epoch) return;
       if (server.active > 0) server.active--;
       server.completed++;
@@ -337,7 +362,7 @@
         const lb = lbPoints();
         const fromServer = serverPoint(server.id);
         const toClient = pathPointFromClient(clientId);
-        await animatePacket([fromServer, lb.center, toClient], 620, true);
+        animatePacket([fromServer, lb.center, toClient], 620, true);
       }
     }, server.processingMs);
   }
@@ -376,15 +401,35 @@
     $('#haproxyConfig').textContent = `backend web\n    ${balanceLine}\n\n${servers}`;
   }
 
-  function setAlgorithm(name) {
+  function setAlgorithm(name, updateHash = true) {
+    if (!algorithms[name]) return;
     state.algorithm = name;
     state.rrIndex = 0;
     state.leastTieIndex = 0;
     state.servers.forEach(s => { s.smoothCurrent = 0; });
-    $$('.algo-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.algorithm === name));
+    $$('.algo-btn').forEach(btn => {
+      const active = btn.dataset.algorithm === name;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-pressed', String(active));
+    });
     $('#algorithmTitle').textContent = algorithms[name].title;
     $('#algorithmDescription').textContent = algorithms[name].description;
     renderConfig();
+    algorithmInitialized = true;
+    if (updateHash) {
+      const hash = `#${algorithmSlugs[name]}`;
+      if (window.location.hash !== hash) history.pushState(null, '', hash);
+    }
+  }
+
+  function restoreAlgorithmFromHash() {
+    const name = Object.keys(algorithmSlugs).find(key => `#${algorithmSlugs[key]}` === window.location.hash);
+    if (!name) {
+      history.replaceState(null, '', '#round-robin');
+      if (!algorithmInitialized || state.algorithm !== 'roundrobin') setAlgorithm('roundrobin', false);
+      return;
+    }
+    if (!algorithmInitialized || state.algorithm !== name) setAlgorithm(name, false);
   }
 
   function autoDelay() { return Math.round(1000 / Number(speed.value)); }
@@ -426,7 +471,11 @@
     mobileFlow.textContent = '요청을 보내면 이동 경로가 여기에 표시됩니다.';
     comparisonResults.hidden = true;
     comparisonResults.innerHTML = '';
-    $$('.client-card').forEach(btn => btn.classList.toggle('active', btn.dataset.client === 'A'));
+    $$('.client-card').forEach(btn => {
+      const selected = btn.dataset.client === 'A';
+      btn.classList.toggle('active', selected);
+      btn.setAttribute('aria-pressed', String(selected));
+    });
     state.servers.forEach(s => {
       s.up = true; s.weight = 1; s.processingMs = 1600; s.active = 0; s.completed = 0; s.smoothCurrent = 0;
     });
@@ -441,7 +490,11 @@
   $$('.algo-btn').forEach(btn => btn.addEventListener('click', () => setAlgorithm(btn.dataset.algorithm)));
   $$('.client-card').forEach(btn => btn.addEventListener('click', () => {
     state.selectedClient = btn.dataset.client;
-    $$('.client-card').forEach(x => x.classList.toggle('active', x === btn));
+    $$('.client-card').forEach(x => {
+      const selected = x === btn;
+      x.classList.toggle('active', selected);
+      x.setAttribute('aria-pressed', String(selected));
+    });
   }));
 
   speed.addEventListener('input', () => {
@@ -459,6 +512,14 @@
   });
 
   sendBtn.addEventListener('click', sendRequest);
+  document.addEventListener('keydown', event => {
+    if (!['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(event.key)
+      || event.repeat || event.altKey || event.ctrlKey || event.metaKey
+      || /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)
+      || event.target.isContentEditable) return;
+    event.preventDefault();
+    sendBtn.click();
+  });
   autoBtn.addEventListener('click', () => state.autoRunning ? stopAuto() : startAuto());
   resetBtn.addEventListener('click', reset);
   compareBtn.addEventListener('click', () => {
@@ -466,7 +527,10 @@
     renderComparison();
   });
   window.addEventListener('resize', () => requestAnimationFrame(drawConnections));
+  window.addEventListener('popstate', restoreAlgorithmFromHash);
+  window.addEventListener('hashchange', restoreAlgorithmFromHash);
 
+  restoreAlgorithmFromHash();
   renderServers();
   renderStats();
   renderConfig();

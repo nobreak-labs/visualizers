@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="교육용 로드밸런서 동작 시각화 시뮬레이터" />
   <title>Load Balancer Visual Simulator</title>
+  <script src="../assets/js/theme.js"></script>
   <link rel="stylesheet" href="../assets/css/common.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -12,11 +13,12 @@
   <main class="app-shell">
     <header class="hero">
       <div>
+        <a class="back-link" href="../index.html">← Visualizers</a>
         <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
         <h1>Load Balancer Visual Simulator</h1>
         <p class="subtitle">클라이언트 요청이 로드밸런서를 거쳐 여러 백엔드 서버로 분산되는 과정을 직접 확인하세요.</p>
       </div>
-      <div class="hero-badge">HAProxy concept</div>
+      <div class="hero-actions"><button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button></div>
     </header>
 
     <section class="control-panel" aria-label="시뮬레이션 제어">
@@ -36,9 +38,10 @@
       </div>
 
       <div class="actions">
-        <button id="sendBtn" class="btn btn-secondary" type="button">Send request</button>
+        <button id="sendBtn" class="btn btn-secondary" type="button" aria-keyshortcuts="ArrowLeft ArrowUp ArrowRight ArrowDown">Send request</button>
         <button id="autoBtn" class="btn btn-primary" type="button" aria-pressed="false">▶ Start traffic</button>
         <button id="resetBtn" class="btn btn-ghost" type="button">↺ Reset</button>
+        <span class="keyboard-hint">방향키로도 요청 전송</span>
       </div>
     </section>
 
@@ -70,15 +73,15 @@
         <div class="column clients-column">
           <p class="column-label">CLIENTS</p>
           <div class="client-stack">
-            <button class="client-card active" data-client="A" data-ip="10.0.0.11" type="button">
+            <button class="client-card active" data-client="A" data-ip="10.0.0.11" type="button" aria-pressed="true">
               <span class="client-avatar">A</span>
               <span><strong>Client A</strong><small>10.0.0.11</small></span>
             </button>
-            <button class="client-card" data-client="B" data-ip="10.0.0.22" type="button">
+            <button class="client-card" data-client="B" data-ip="10.0.0.22" type="button" aria-pressed="false">
               <span class="client-avatar">B</span>
               <span><strong>Client B</strong><small>10.0.0.22</small></span>
             </button>
-            <button class="client-card" data-client="C" data-ip="10.0.0.33" type="button">
+            <button class="client-card" data-client="C" data-ip="10.0.0.33" type="button" aria-pressed="false">
               <span class="client-avatar">C</span>
               <span><strong>Client C</strong><small>10.0.0.33</small></span>
             </button>
