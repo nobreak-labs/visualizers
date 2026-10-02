@@ -127,7 +127,7 @@ h1 { margin: 6px 0 0; font-size: clamp(27px, 3vw, 43px); line-height: 1.1; lette
 .runtime-stack { grid-column: 1 / -1; display: grid; grid-template-columns: .72fr 1.35fr .92fr; gap: 28px; }
 .runtime-stack .component { width: min(100%, 130px); }
 .runtime-stack .component .text-badge { color: var(--node); }
-.worker-node .component.interface { border-style: dashed; background: #12313b; }
+.worker-node .component.interface { background: #12313b; }
 .pod-row { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .pod-row .component { width: min(100%, 140px); }
 .pod-row .official-icon { margin: 0; }

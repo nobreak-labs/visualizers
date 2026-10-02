@@ -13,7 +13,7 @@ const definitions = [
   { key: "cri", category: "NODE INTERFACE", title: "CRI", icon: "CRI", description: "kubelet과 컨테이너 런타임이 통신하는 표준 gRPC 인터페이스입니다. 그림의 CRI 박스는 별도 데몬이 아닌 두 구성요소 사이의 규격을 뜻합니다.", relation: "kubelet → CRI → container runtime" },
   { key: "runtime", category: "WORKER NODE", title: "Container runtime", icon: "RT", description: "containerd나 CRI-O 같은 런타임은 CRI 요청을 받아 Pod의 컨테이너를 시작·중지하고 상태를 관리합니다. Pod 네트워크 설정에는 CNI 플러그인을 사용합니다.", relation: "kubelet → CRI → runtime → 컨테이너 · runtime → CNI" },
   { key: "cni", category: "NODE INTERFACE", title: "CNI plugin", icon: "CNI", description: "컨테이너 런타임이 호출하는 네트워크 플러그인 규격입니다. 구현체가 Pod의 네트워크 인터페이스와 IP를 설정해 Pod 간 통신을 가능하게 합니다.", relation: "container runtime → CNI plugin → Pod 네트워크" },
-  { key: "proxy", category: "OPTIONAL · WORKER NODE", title: "kube-proxy", icon: "PROXY", description: "Service와 EndpointSlice 변경을 감시해 Service 트래픽을 전달할 노드 규칙을 관리합니다. Cilium 같은 CNI가 Service 프록시 대체 기능을 제공하고 이를 활성화한 경우 생략할 수 있습니다. Cilium 설치만으로 자동 생략되지는 않습니다.", relation: "API의 Service·EndpointSlice → kube-proxy → 노드 전달 규칙" },
+  { key: "proxy", category: "OPTIONAL · WORKER NODE", title: "kube-proxy", icon: "PROXY", description: "Service와 EndpointSlice 변경을 감시해 Service 트래픽을 전달할 노드 규칙을 관리합니다. Cilium 같은 CNI가 Service 프록시 대체 기능을 제공하고 이를 활성화한 경우 생략할 수 있습니다.", relation: "API의 Service·EndpointSlice → kube-proxy → 노드 전달 규칙" },
   { key: "pod", category: "WORKLOAD", title: "Pod", icon: "POD", description: "Kubernetes가 관리하는 가장 작은 배포 단위입니다. 하나 이상의 컨테이너가 네트워크를 공유하고, 설정된 볼륨을 함께 사용할 수 있습니다.", relation: "스케줄러가 노드 지정 → kubelet·런타임이 실행 → CNI가 네트워크 구성" },
   { key: "api-lb", topology: "ha-stacked", category: "HA ENTRY POINT", title: "API load balancer", icon: "LB", description: "세 API 서버 앞에 두는 공통 접속 주소입니다. 클라이언트 연결을 정상인 API 서버 한 곳으로 전달해 인스턴스 하나가 중단돼도 API 접속을 유지합니다.", relation: "kubectl → API load balancer → 정상 kube-apiserver 1개" },
   { key: "ha-stacked", topology: "ha-stacked", category: "HA TOPOLOGY · STACKED ETCD", title: "고가용성 컨트롤 플레인 · 내부 etcd", icon: "HA", description: "API 서버와 etcd 멤버를 같은 노드에 배치해 호스트 수를 줄입니다. 노드 하나가 고장 나면 두 구성요소를 동시에 잃습니다. etcd 3멤버 중 2개가 정족수입니다.", relation: "각 API server ↔ 같은 노드의 etcd · 3멤버 중 2개 정족수" },
@@ -425,10 +425,10 @@ function singleWorkerBus(edges, cards, obstacles, frame) {
   const nextColumn = cards.find(card => card.anchor === "etcd");
   const targets = edges.map(edge => cards.find(card => card.anchor === edge.to));
   if (!source || !nextColumn || targets.some(target => !target)) return null;
-  const heading = relativeBounds(document.querySelector(".node-section-heading"), frame);
+  const control = relativeBounds(document.getElementById("singleControlPlane"), frame);
   const nodes = relativeBounds(document.querySelector(".worker-node"), frame);
   const laneX = (source.rect.right + nextColumn.rect.left) / 2;
-  const laneY = (heading.bottom + nodes.top) / 2;
+  const laneY = (control.bottom + nodes.top) / 2;
   const sourcePoint = ports(source.rect)[1].point;
   const targetXs = targets.map(target => ports(target.rect)[0].point.x);
   const parts = [

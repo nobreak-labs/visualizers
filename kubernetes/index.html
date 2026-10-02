@@ -51,7 +51,7 @@
           <div class="cluster-boundary">
             <div class="cluster-title"><img class="cluster-symbol" src="icons/kubernetes.svg" alt="" aria-hidden="true" /><span>KUBERNETES CLUSTER</span><span class="cluster-count" id="clusterCount">1 CONTROL PLANE · 2 NODES</span></div>
             <div class="control-plane area-box" id="singleControlPlane">
-              <div class="area-header"><span class="area-label">CONTROL PLANE</span><span class="area-subtitle">클러스터의 상태를 결정하고 유지</span></div>
+              <div class="area-header"><span class="area-label">CONTROL PLANE</span></div>
               <div class="cp-grid">
                 <button class="component cp-primary" data-component="apiserver" data-anchor="apiserver" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong><small>모든 요청의 관문</small></button>
                 <button class="component" data-component="etcd" data-anchor="etcd" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd</strong><small>클러스터 상태 저장</small></button>
@@ -72,7 +72,7 @@
             </div>
             <div class="etcd-cluster" id="externalEtcdCluster" hidden><div class="etcd-heading"><span class="area-label">EXTERNAL ETCD CLUSTER</span></div><div class="etcd-members"><button class="component" data-component="etcd" data-anchor="etcd-1" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 1</strong></button><button class="component" data-component="etcd" data-anchor="etcd-2" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 2</strong></button><button class="component" data-component="etcd" data-anchor="etcd-3" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 3</strong></button></div><span class="etcd-meta">3 MEMBERS · QUORUM 2/3</span></div>
 
-            <div class="node-section-heading"><span class="area-label">WORKER NODES</span><span class="area-subtitle">Pod와 컨테이너가 실제로 실행되는 곳</span></div>
+            <div class="node-section-heading"><span class="area-label">WORKER NODES</span></div>
             <div class="nodes">
               <article class="worker-node area-box" aria-label="Worker Node A">
                 <div class="node-header"><strong>Worker Node A</strong></div>
