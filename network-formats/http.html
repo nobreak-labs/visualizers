@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="HTTP/1.1 요청·응답의 시작 줄, 헤더와 본문 및 주요 메서드·상태 코드입니다." />
+  <title>HTTP/1.1 Message | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>HTTP/1.1 Message</h1>
+        <p class="subtitle">HTTP/1.1 요청·응답의 시작 줄, 헤더와 본문 및 주요 메서드·상태 코드입니다.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div><span class="section-kicker">APPLICATION LAYER</span><h2 id="diagram-title">HTTP/1.1 메시지 형식</h2></div>
+        <span class="diagram-meta">텍스트 형식 · 고정 비트 폭 없음</span>
+      </div>
+      <div class="packet-layout">
+<figure class="packet-example"><figcaption>HTTP/1.1 요청 메시지 · 텍스트 형식 · 시작 줄·헤더 줄의 끝은 CRLF (2 B)</figcaption><div class="http-format"><div class="http-part start"><strong>Request Line · 가변 길이</strong><code>GET / HTTP/1.1\r\n</code></div><div class="http-part headers"><strong>Header Fields · 가변 길이</strong><code>Host: example.com\r\n
+Accept: text/html\r\n</code></div><div class="http-part delimiter"><strong>빈 줄 · 2 B (16 bits)</strong><code>\r\n</code></div><div class="http-part body"><strong>Message Body · 이 예시에서는 0 B</strong></div></div></figure>
+<figure class="packet-example"><figcaption>HTTP/1.1 응답 메시지 · 텍스트 형식</figcaption><div class="http-format"><div class="http-part start"><strong>Status Line · 가변 길이</strong><code>HTTP/1.1 200 OK\r\n</code></div><div class="http-part headers"><strong>Header Fields · 가변 길이</strong><code>Date: Sat, 03 Oct 2026 00:00:00 GMT\r\n
+Content-Type: text/plain\r\n
+Content-Length: 13\r\n</code></div><div class="http-part delimiter"><strong>빈 줄 · 2 B (16 bits)</strong><code>\r\n</code></div><div class="http-part body"><strong>Message Body · 이 예시에서는 13 B (104 bits)</strong><code>Hello, world!</code></div></div></figure><div class="field-description-scroll"><table class="field-descriptions"><caption>필드 이름과 역할</caption><thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead><tbody>
+<tr><th scope="row">Request Line</th><td>Request Line</td><td>가변 길이</td><td>Method, 공백, Request Target, 공백, HTTP Version, CRLF 순서입니다.</td></tr>
+<tr><th scope="row">Method</th><td>Request Method</td><td>가변 길이</td><td>요청할 동작을 나타내는 토큰입니다.<ul class="field-values"><li><code>GET</code> — 표현 조회</li><li><code>HEAD</code> — GET에 대응하는 헤더를 조회하되 응답 본문 없음; 본문 생성 중에만 결정되는 헤더는 생략 가능</li><li><code>POST</code> — 리소스별 처리 요청</li><li><code>PUT</code> — 표현 생성 또는 교체</li><li><code>DELETE</code> — 리소스 연결 제거 요청</li><li><code>CONNECT</code> — 터널 설정</li><li><code>OPTIONS</code> — 통신 옵션 조회</li><li><code>PATCH</code> — 부분 수정</li></ul></td></tr>
+<tr><th scope="row">Request Target</th><td>Request Target</td><td>가변 길이</td><td>요청 대상을 나타냅니다. 경로·질의, 절대 URI, CONNECT의 호스트:포트, OPTIONS의 * 등이 사용됩니다.</td></tr>
+<tr><th scope="row">HTTP Version</th><td>HTTP Version</td><td>HTTP/1.1 토큰: 8 B · 64 bits</td><td>여기서는 HTTP/1.1의 텍스트 메시지를 표시합니다. HTTP/2와 HTTP/3는 다른 바이너리 프레임 형식을 사용합니다.</td></tr>
+<tr><th scope="row">Status Line</th><td>Status Line</td><td>가변 길이</td><td>HTTP Version, 공백, Status Code, 공백, 선택적인 Reason Phrase, CRLF 순서입니다.</td></tr>
+<tr><th scope="row">Status Code</th><td>Status Code</td><td>3 B · 24 bits</td><td>세 자리 십진수로 응답 결과를 나타냅니다.<ul class="field-values"><li><code>200</code> — OK</li><li><code>201</code> — Created</li><li><code>204</code> — No Content</li><li><code>301</code> — Moved Permanently</li><li><code>302</code> — Found</li><li><code>304</code> — Not Modified</li><li><code>400</code> — Bad Request</li><li><code>401</code> — Unauthorized</li><li><code>403</code> — Forbidden</li><li><code>404</code> — Not Found</li><li><code>405</code> — Method Not Allowed</li><li><code>429</code> — Too Many Requests</li><li><code>500</code> — Internal Server Error</li><li><code>502</code> — Bad Gateway</li><li><code>503</code> — Service Unavailable</li></ul></td></tr>
+<tr><th scope="row">Reason Phrase</th><td>Reason Phrase</td><td>가변 길이</td><td>상태 코드 뒤의 선택적 설명입니다. 클라이언트는 상태 코드를 기준으로 처리합니다.</td></tr>
+<tr><th scope="row">Header Fields</th><td>Header Fields</td><td>가변 길이</td><td>Field Name, 콜론, 선택적 공백, Field Value, 선택적 공백과 CRLF로 구성됩니다. HTTP/1.1 요청에는 Host 필드가 필수입니다.<ul class="field-values"><li><code>Host</code> — 요청 대상 호스트와 선택적인 포트</li><li><code>Content-Type</code> — 본문의 미디어 유형</li><li><code>Content-Length</code> — 일반적으로 본문 길이(바이트); HEAD·304에서는 대응하는 표현의 길이를 나타낼 수 있음</li><li><code>Date</code> — 메시지 생성 시각</li><li><code>Transfer-Encoding</code> — 전송 코딩; chunked 등</li><li><code>Accept</code> — 허용할 응답 미디어 유형</li><li><code>Authorization</code> — 인증 정보</li><li><code>Cache-Control</code> — 캐시 지시</li><li><code>Location</code> — 리다이렉션 등 대상 URI</li></ul></td></tr>
+<tr><th scope="row">CRLF</th><td>Carriage Return and Line Feed</td><td>2 B · 16 bits</td><td>시작 줄과 각 헤더 줄의 끝입니다. CR(0x0D)과 LF(0x0A) 두 바이트입니다.</td></tr>
+<tr><th scope="row">Empty Line</th><td>Header Section Terminator</td><td>2 B · 16 bits</td><td>빈 CRLF 줄이 헤더 영역을 종료합니다.</td></tr>
+<tr><th scope="row">Message Body</th><td>Message Body</td><td>가변 길이</td><td>메시지의 본문입니다. 길이는 RFC9112의 우선순위 규칙으로 결정하며, 일부 응답은 연결 종료로 끝납니다. HEAD 응답과 1xx·204·304 응답에는 본문이 없습니다. CONNECT의 2xx 응답 뒤에는 터널 데이터가 이어집니다. chunked 전송에는 청크 크기·종료 청크와 선택적 트레일러가 포함됩니다.</td></tr>
+</tbody></table></div>
+      </div>
+      <p class="diagram-note">응답 예시는 Content-Length: 13으로 본문 길이를 지정합니다. 요청 예시는 Content-Length와 Transfer-Encoding이 없으므로 본문 길이가 0입니다. 본문은 임의의 바이트열이며 줄 끝을 CRLF로 제한하지 않습니다. chunked 형식은 별도의 청크 구조를 사용합니다.</p>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/HTTP" target="_blank" rel="noopener noreferrer">HTTP (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc9110.html" target="_blank" rel="noopener noreferrer">RFC9110 ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc9112.html" target="_blank" rel="noopener noreferrer">RFC9112 ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

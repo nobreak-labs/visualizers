@@ -178,10 +178,14 @@
 
     if (algorithm === 'leastconn') {
       const minActive = Math.min(...healthy.map(s => s.active / Math.max(s.weight, 1)));
-      const tied = healthy.filter(s => Math.abs((s.active / Math.max(s.weight, 1)) - minActive) < 1e-9);
-      const server = tied[routing.leastTieIndex % tied.length];
-      routing.leastTieIndex++;
-      return server;
+      for (let offset = 0; offset < healthy.length; offset++) {
+        const index = (routing.leastTieIndex + offset) % healthy.length;
+        const server = healthy[index];
+        if (Math.abs((server.active / Math.max(server.weight, 1)) - minActive) < 1e-9) {
+          routing.leastTieIndex = (index + 1) % healthy.length;
+          return server;
+        }
+      }
     }
 
     if (algorithm === 'hash') {
@@ -454,7 +458,8 @@
     state.autoTimer = null;
     autoBtn.textContent = '▶ Start traffic';
     autoBtn.setAttribute('aria-pressed', 'false');
-    $('#lbStatus').textContent = 'Ready';
+    $('#lbStatus').textContent = state.servers.some(s => s.active) ? 'Processing requests'
+      : (healthyServers(state.servers).length ? 'Ready' : 'No healthy backend');
   }
 
   function reset() {
@@ -479,6 +484,7 @@
     state.servers.forEach(s => {
       s.up = true; s.weight = 1; s.processingMs = 1600; s.active = 0; s.completed = 0; s.smoothCurrent = 0;
     });
+    $('#lbStatus').textContent = 'Ready';
     setAlgorithm('roundrobin');
     packetLayer.innerHTML = '';
     renderServers();

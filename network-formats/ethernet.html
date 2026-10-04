@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ethernet II 프레임과 앞뒤 물리 계층 전송 구간의 필드 구성을 살펴보세요." />
+  <title>Ethernet II Frame | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>Ethernet II Frame</h1>
+        <p class="subtitle">전송 순서에 따라 물리 계층 구간과 Ethernet II 프레임의 필드를 살펴보세요.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div>
+          <span class="section-kicker">LINK LAYER</span>
+          <h2 id="diagram-title">Ethernet II 프레임</h2>
+        </div>
+        <span class="diagram-meta">전송 순서 · 필드 길이</span>
+      </div>
+      <div class="ethernet-layout">
+        <figure class="wire-example">
+          <figcaption>802.1Q 태그 없음 · 프레임 64–1518 B</figcaption>
+          <div class="wire-scroll" style="--wire-columns: repeat(8, 112px)">
+            <div class="wire-regions">
+              <span class="physical-region" style="grid-column: 1 / 3">프레임 앞</span>
+              <span class="header-region" style="grid-column: 3 / 6">헤더 · 14 B</span>
+              <span class="data-region" style="grid-column: 6">데이터 · MTU 1500 B</span>
+              <span class="trailer-region" style="grid-column: 7">트레일러</span>
+              <span class="physical-region" style="grid-column: 8">프레임 뒤</span>
+            </div>
+            <div class="wire-track" role="group" aria-label="태그 없는 Ethernet II 전송 순서">
+              <span class="wire-field physical"><strong>Preamble</strong><small>7 B</small></span>
+              <span class="wire-field physical"><strong>SFD</strong><small>1 B</small></span>
+              <span class="wire-field header"><strong>Dst</strong><small>6 B</small></span>
+              <span class="wire-field header"><strong>Src</strong><small>6 B</small></span>
+              <span class="wire-field header"><strong>Type</strong><small>2 B</small></span>
+              <span class="wire-field payload"><strong>Payload + Padding</strong><small>46–1500 B</small></span>
+              <span class="wire-field trailer"><strong>FCS</strong><small>4 B</small></span>
+              <span class="wire-field physical"><strong>IPG</strong><small>12 B 시간</small></span>
+            </div>
+          </div>
+        </figure>
+        <figure class="wire-example">
+          <figcaption>802.1Q 태그 있음 · 프레임 64–1522 B</figcaption>
+          <div class="wire-scroll" style="--wire-columns: repeat(4, 112px) 256px repeat(4, 112px)">
+            <div class="wire-regions">
+              <span class="physical-region" style="grid-column: 1 / 3">프레임 앞</span>
+              <span class="header-region" style="grid-column: 3 / 7">헤더 · 18 B</span>
+              <span class="data-region" style="grid-column: 7">데이터 · MTU 1500 B</span>
+              <span class="trailer-region" style="grid-column: 8">트레일러</span>
+              <span class="physical-region" style="grid-column: 9">프레임 뒤</span>
+            </div>
+            <div class="wire-track" role="group" aria-label="802.1Q 태그가 있는 Ethernet II 전송 순서">
+              <span class="wire-field physical"><strong>Preamble</strong><small>7 B</small></span>
+              <span class="wire-field physical"><strong>SFD</strong><small>1 B</small></span>
+              <span class="wire-field header"><strong>Dst</strong><small>6 B</small></span>
+              <span class="wire-field header"><strong>Src</strong><small>6 B</small></span>
+              <div class="wire-field header wire-tag" role="group" aria-label="802.1Q Tag 4 B: TPID 16, PCP 3, DEI 1, VID 12 bits">
+                <div class="wire-tag-title"><strong>802.1Q Tag</strong><span> · 4 B</span></div>
+                <div class="wire-tag-fields">
+                  <span title="TPID · 16 bits · 0x8100"><strong>TPID</strong><small>16 bits</small></span>
+                  <span title="PCP · 3 bits"><strong>PCP</strong><small>3 bits</small></span>
+                  <span title="DEI · 1 bit"><strong>DEI</strong><small>1 bit</small></span>
+                  <span title="VID · 12 bits"><strong>VID</strong><small>12 bits</small></span>
+                </div>
+              </div>
+              <span class="wire-field header"><strong>Type</strong><small>2 B</small></span>
+              <span class="wire-field payload"><strong>Payload + Padding</strong><small>42–1500 B</small></span>
+              <span class="wire-field trailer"><strong>FCS</strong><small>4 B</small></span>
+              <span class="wire-field physical"><strong>IPG</strong><small>12 B 시간</small></span>
+            </div>
+
+          </div>
+        </figure>
+        <div class="field-description-scroll">
+          <table class="field-descriptions">
+            <caption>필드 이름과 역할</caption>
+            <thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Preamble</th><td>Preamble</td><td>7 B</td><td>수신기가 송신 신호에 동기화하도록 하는 반복 패턴입니다.</td></tr>
+              <tr><th scope="row">SFD</th><td>Start Frame Delimiter</td><td>1 B</td><td>프리앰블의 끝과 프레임 시작을 표시합니다.</td></tr>
+              <tr><th scope="row">Dst</th><td>Destination Media Access Control Address</td><td>6 B</td><td>프레임을 받을 장치의 MAC 주소입니다.</td></tr>
+              <tr><th scope="row">Src</th><td>Source Media Access Control Address</td><td>6 B</td><td>프레임을 보낸 장치의 MAC 주소입니다.</td></tr>
+              <tr><th scope="row">Tag</th><td>IEEE 802.1Q VLAN Tag</td><td>4 B</td><td>출발지 MAC과 EtherType 사이에 삽입되는 VLAN 태그입니다.</td></tr>
+              <tr><th scope="row">Type</th><td>EtherType</td><td>2 B</td><td>페이로드에 담긴 프로토콜을 식별합니다. 주요 값은 다음과 같습니다.
+                  <ul class="field-values">
+                    <li><code>0x0800</code> — IPv4</li>
+                    <li><code>0x0806</code> — ARP</li>
+                    
+                    <li><code>0x86DD</code> — IPv6</li>
+                    
+                    
+                    
+                    
+                    <li><code>0x88CC</code> — LLDP — 링크 계층 이웃 탐색</li>
+                  </ul>
+                </td></tr>
+              <tr><th scope="row">Payload + Padding</th><td>Payload and Padding</td><td>46–1500 B / 42–1500 B</td><td>상위 계층 데이터를 담습니다. 태그 유무에 따라 최소 크기가 다르며, 부족한 길이는 패딩으로 채웁니다. MTU는 최대 데이터 크기인 1500 B입니다.</td></tr>
+              <tr><th scope="row">FCS</th><td>Frame Check Sequence</td><td>4 B</td><td>프레임 끝에 위치하는 트레일러 필드로, MAC 헤더와 데이터의 오류를 검출하는 CRC-32 값입니다.</td></tr>
+              <tr><th scope="row">IPG</th><td>Interpacket Gap</td><td>96 bit times</td><td>다음 전송 전의 유휴 시간으로, 12바이트를 전송하는 시간에 해당합니다.</td></tr>
+              <tr><th scope="row">TPID</th><td>Tag Protocol Identifier</td><td>16 bits</td><td>802.1Q 태그를 식별하는 값이며 0x8100입니다.</td></tr>
+              <tr><th scope="row">TCI</th><td>Tag Control Information</td><td>16 bits</td><td>PCP, DEI, VID를 포함하는 태그 제어 정보입니다.</td></tr>
+              <tr><th scope="row">PCP</th><td>Priority Code Point</td><td>3 bits</td><td>트래픽 우선순위를 나타냅니다.</td></tr>
+              <tr><th scope="row">DEI</th><td>Drop Eligible Indicator</td><td>1 bit</td><td>혼잡 시 폐기 대상으로 취급할 수 있는 프레임을 표시합니다.</td></tr>
+              <tr><th scope="row">VID</th><td>VLAN Identifier</td><td>12 bits</td><td>프레임이 속한 VLAN을 식별합니다. 1–4094는 VLAN ID, 0은 VLAN ID를 지정하지 않는 우선순위 태그이며 4095는 예약 값입니다.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="diagram-note">길이는 일반적인 1500바이트 MTU와 단일 802.1Q C-태그 기준입니다. 프레임 길이에는 Dst부터 FCS까지 포함하며, Preamble·SFD·IPG는 제외합니다. 태그가 있어도 최소 프레임 길이는 64바이트이며, 기존 패딩을 유지해 태그를 삽입하면 68바이트가 될 수도 있습니다.</p>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/Ethernet_frame" target="_blank" rel="noopener noreferrer">Ethernet frame (Wikipedia) ↗</a> · <a href="https://en.wikipedia.org/wiki/IEEE_802.1Q" target="_blank" rel="noopener noreferrer">IEEE 802.1Q (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc894.html" target="_blank" rel="noopener noreferrer">RFC894 ↗</a> · <a href="https://www.iana.org/assignments/ieee-802-numbers/#ethernet-numbers" target="_blank" rel="noopener noreferrer">IANA EtherTypes ↗</a> · <a href="https://www.ieee802.org/3/as/public/0607/802.3as_overview.pdf" target="_blank" rel="noopener noreferrer">IEEE 802.3as · C-태그 최소 프레임 ↗</a> · <a href="https://www.intel.com/content/www/us/en/docs/programmable/741328/22-3-21-1-0/frame-payload-padding.html" target="_blank" rel="noopener noreferrer">Intel · 프레임 패딩 ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

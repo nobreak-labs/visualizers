@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="TCP 헤더와 제어 플래그, 옵션 및 데이터의 구조를 살펴보세요." />
+  <title>TCP Segment | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>TCP Segment</h1>
+        <p class="subtitle">TCP 헤더와 제어 플래그, 옵션 및 데이터의 구조를 살펴보세요.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div><span class="section-kicker">TRANSPORT LAYER</span><h2 id="diagram-title">TCP 세그먼트 헤더</h2></div>
+        <span class="diagram-meta">한 행 32비트 · 비트 / 바이트 오프셋</span>
+      </div>
+      <div class="packet-layout">
+<figure class="packet-example"><figcaption>TCP 헤더 · 20–60 B · AE를 포함한 현재 플래그 배치</figcaption><div class="wire-scroll"><div class="packet-grid" style="--packet-columns: 32; --packet-rows: 5" role="group" aria-label="TCP 헤더 · 20–60 B · AE를 포함한 현재 플래그 배치 · 가로 바이트와 비트 · 세로 바이트와 비트 오프셋">
+<span class="packet-axis" style="grid-row:1;grid-column:1">오프셋</span><span class="packet-axis" style="grid-row:1;grid-column:2">바이트</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:3 / span 8">0</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:11 / span 8">1</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:19 / span 8">2</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:27 / span 8">3</span><span class="packet-axis" style="grid-row:2;grid-column:1">바이트</span><span class="packet-axis" style="grid-row:2;grid-column:2">비트</span><span class="packet-axis" style="grid-row:2;grid-column:3">0</span><span class="packet-axis" style="grid-row:2;grid-column:4">1</span><span class="packet-axis" style="grid-row:2;grid-column:5">2</span><span class="packet-axis" style="grid-row:2;grid-column:6">3</span><span class="packet-axis" style="grid-row:2;grid-column:7">4</span><span class="packet-axis" style="grid-row:2;grid-column:8">5</span><span class="packet-axis" style="grid-row:2;grid-column:9">6</span><span class="packet-axis" style="grid-row:2;grid-column:10">7</span><span class="packet-axis" style="grid-row:2;grid-column:11">8</span><span class="packet-axis" style="grid-row:2;grid-column:12">9</span><span class="packet-axis" style="grid-row:2;grid-column:13">10</span><span class="packet-axis" style="grid-row:2;grid-column:14">11</span><span class="packet-axis" style="grid-row:2;grid-column:15">12</span><span class="packet-axis" style="grid-row:2;grid-column:16">13</span><span class="packet-axis" style="grid-row:2;grid-column:17">14</span><span class="packet-axis" style="grid-row:2;grid-column:18">15</span><span class="packet-axis" style="grid-row:2;grid-column:19">16</span><span class="packet-axis" style="grid-row:2;grid-column:20">17</span><span class="packet-axis" style="grid-row:2;grid-column:21">18</span><span class="packet-axis" style="grid-row:2;grid-column:22">19</span><span class="packet-axis" style="grid-row:2;grid-column:23">20</span><span class="packet-axis" style="grid-row:2;grid-column:24">21</span><span class="packet-axis" style="grid-row:2;grid-column:25">22</span><span class="packet-axis" style="grid-row:2;grid-column:26">23</span><span class="packet-axis" style="grid-row:2;grid-column:27">24</span><span class="packet-axis" style="grid-row:2;grid-column:28">25</span><span class="packet-axis" style="grid-row:2;grid-column:29">26</span><span class="packet-axis" style="grid-row:2;grid-column:30">27</span><span class="packet-axis" style="grid-row:2;grid-column:31">28</span><span class="packet-axis" style="grid-row:2;grid-column:32">29</span><span class="packet-axis" style="grid-row:2;grid-column:33">30</span><span class="packet-axis" style="grid-row:2;grid-column:34">31</span><span class="packet-offset" style="grid-row:3;grid-column:1">0</span><span class="packet-offset" style="grid-row:3;grid-column:2">0</span>
+<span class="packet-offset" style="grid-row:4;grid-column:1">4</span><span class="packet-offset" style="grid-row:4;grid-column:2">32</span>
+<span class="packet-offset" style="grid-row:5;grid-column:1">8</span><span class="packet-offset" style="grid-row:5;grid-column:2">64</span>
+<span class="packet-offset" style="grid-row:6;grid-column:1">12</span><span class="packet-offset" style="grid-row:6;grid-column:2">96</span>
+<span class="packet-offset" style="grid-row:7;grid-column:1">16</span><span class="packet-offset" style="grid-row:7;grid-column:2">128</span>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:3 / span 16" title="Source Port · 2 B · 16 bits"><strong>Source Port</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:19 / span 16" title="Destination Port · 2 B · 16 bits"><strong>Destination Port</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:3 / span 32" title="Sequence Number · 4 B · 32 bits"><strong>Sequence Number</strong><small>4 B · 32 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 1;grid-column:3 / span 32" title="Acknowledgment Number · 4 B · 32 bits"><strong>Acknowledgment Number</strong><small>4 B · 32 bits</small></div>
+<div class="packet-field" style="grid-row:6 / span 1;grid-column:3 / span 4" title="Data Offset · 4 bits"><strong>Offset</strong><small>4 bits</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:7 / span 3" title="Reserved · 3 bits"><strong>Rsrvd</strong><small>3 bits</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:10 / span 1" title="Accurate ECN · 1 bit"><strong>AE</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:11 / span 1" title="Congestion Window Reduced · 1 bit"><strong>CWR</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:12 / span 1" title="ECN Echo · 1 bit"><strong>ECE</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:13 / span 1" title="Urgent · 1 bit"><strong>URG</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:14 / span 1" title="Acknowledgment · 1 bit"><strong>ACK</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:15 / span 1" title="Push · 1 bit"><strong>PSH</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:16 / span 1" title="Reset · 1 bit"><strong>RST</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:17 / span 1" title="Synchronize · 1 bit"><strong>SYN</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:6 / span 1;grid-column:18 / span 1" title="Finish · 1 bit"><strong>FIN</strong><small>1 bit</small></div>
+<div class="packet-field" style="grid-row:6 / span 1;grid-column:19 / span 16" title="Receive Window · 2 B · 16 bits"><strong>Window</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:7 / span 1;grid-column:3 / span 16" title="TCP Checksum · 2 B · 16 bits"><strong>Checksum</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:7 / span 1;grid-column:19 / span 16" title="Urgent Pointer · 2 B · 16 bits"><strong>Urgent Pointer</strong><small>2 B · 16 bits</small></div>
+</div><div class="packet-tail"><span class="packet-offset">20</span><span class="packet-offset">160</span><div class="packet-tail-field optional"><strong>Options + Padding</strong><small>0–40 B · 0–320 bits</small><span>선택적 헤더 영역 축약</span></div></div><div class="packet-tail"><span class="packet-offset">가변</span><span class="packet-offset">가변</span><div class="packet-tail-field data"><strong>Data</strong><small>가변 길이</small><span>시작 오프셋 = Data Offset × 4 B</span></div></div></div></figure><div class="field-description-scroll"><table class="field-descriptions"><caption>필드 이름과 역할</caption><thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead><tbody>
+<tr><th scope="row">Source Port</th><td>Source Port</td><td>2 B · 16 bits</td><td>송신 애플리케이션의 포트입니다.</td></tr>
+<tr><th scope="row">Destination Port</th><td>Destination Port</td><td>2 B · 16 bits</td><td>수신 애플리케이션의 포트입니다.<ul class="field-values"><li><code>22</code> — SSH</li><li><code>25</code> — SMTP</li><li><code>53</code> — DNS</li><li><code>80</code> — HTTP</li><li><code>443</code> — HTTPS</li></ul></td></tr>
+<tr><th scope="row">Sequence Number</th><td>Sequence Number</td><td>4 B · 32 bits</td><td>이 세그먼트의 첫 데이터 바이트 순서 번호입니다. SYN은 초기 순서 번호를 담고 순서 공간을 하나 사용합니다.</td></tr>
+<tr><th scope="row">Acknowledgment Number</th><td>Acknowledgment Number</td><td>4 B · 32 bits</td><td>다음에 받기를 기대하는 순서 번호입니다. ACK가 1일 때 유효합니다.</td></tr>
+<tr><th scope="row">Offset</th><td>Data Offset</td><td>4 bits</td><td>TCP 헤더 길이를 4바이트 단위로 표시합니다.<ul class="field-values"><li><code>5</code> — 20 B — 옵션 없음</li><li><code>6–15</code> — 24–60 B — 옵션 포함</li></ul></td></tr>
+<tr><th scope="row">Reserved</th><td>Reserved</td><td>3 bits</td><td>미래 확장을 위해 예약된 세 비트입니다. 송신 시 0입니다.</td></tr>
+<tr><th scope="row">AE</th><td>Accurate ECN</td><td>1 bit</td><td>RFC9768에서 과거 NS 위치에 할당한 Accurate ECN 비트입니다. AccECN을 협상한 연결에서는 AE·CWR·ECE를 묶어 3비트 ACE 피드백 필드로 사용합니다.</td></tr>
+<tr><th scope="row">CWR</th><td>Congestion Window Reduced</td><td>1 bit</td><td>기존 ECN 방식에서 혼잡 윈도를 줄였음을 알립니다.</td></tr>
+<tr><th scope="row">ECE</th><td>ECN Echo</td><td>1 bit</td><td>기존 ECN 방식에서 ECN 지원 또는 혼잡 경험을 알립니다.</td></tr>
+<tr><th scope="row">URG</th><td>Urgent</td><td>1 bit</td><td>Urgent Pointer가 유효함을 나타냅니다.</td></tr>
+<tr><th scope="row">ACK</th><td>Acknowledgment</td><td>1 bit</td><td>Acknowledgment Number가 유효함을 나타냅니다.</td></tr>
+<tr><th scope="row">PSH</th><td>Push</td><td>1 bit</td><td>수신 측에 버퍼의 데이터를 애플리케이션으로 전달하도록 요청합니다.</td></tr>
+<tr><th scope="row">RST</th><td>Reset</td><td>1 bit</td><td>연결을 초기화하거나 거부합니다.</td></tr>
+<tr><th scope="row">SYN</th><td>Synchronize</td><td>1 bit</td><td>연결 시작 시 순서 번호를 동기화합니다.</td></tr>
+<tr><th scope="row">FIN</th><td>Finish</td><td>1 bit</td><td>송신 측에 더 보낼 데이터가 없음을 뜻합니다. 순서 공간을 하나 사용합니다.</td></tr>
+<tr><th scope="row">Window</th><td>Receive Window</td><td>2 B · 16 bits</td><td>이 세그먼트를 보낸 측이 ACK 번호부터 수신할 수 있는 데이터 양을 바이트 단위로 알립니다. Window Scale 협상 후 배율을 적용하지만, SYN이 설정된 세그먼트의 Window 값에는 적용하지 않습니다.</td></tr>
+<tr><th scope="row">Checksum</th><td>TCP Checksum</td><td>2 B · 16 bits</td><td>IP 의사 헤더, TCP 헤더와 데이터를 검사하는 필수 체크섬입니다.</td></tr>
+<tr><th scope="row">Urgent Pointer</th><td>Urgent Pointer</td><td>2 B · 16 bits</td><td>Sequence Number 기준 긴급 데이터의 끝 다음 위치를 나타냅니다. URG가 1일 때 유효합니다.</td></tr>
+<tr><th scope="row">Options + Padding</th><td>TCP Options and Padding</td><td>0–40 B · 0–320 bits</td><td>선택적 헤더 필드이며 헤더를 4바이트 배수로 맞춥니다.<ul class="field-values"><li><code>0</code> — End of Option List</li><li><code>1</code> — No Operation</li><li><code>2</code> — Maximum Segment Size (MSS)</li><li><code>3</code> — Window Scale</li><li><code>4</code> — SACK Permitted</li><li><code>5</code> — Selective Acknowledgment (SACK)</li><li><code>8</code> — Timestamps</li></ul></td></tr>
+<tr><th scope="row">Data</th><td>Application Data</td><td>가변 길이</td><td>TCP가 운반하는 바이트 스트림의 일부입니다. 데이터 시작 위치는 Data Offset × 4 B입니다.</td></tr>
+</tbody></table></div>
+      </div>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener noreferrer">Transmission Control Protocol (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc9293.html" target="_blank" rel="noopener noreferrer">RFC9293 ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc9768.html" target="_blank" rel="noopener noreferrer">RFC9768 ↗</a> · <a href="https://www.iana.org/assignments/tcp-parameters/" target="_blank" rel="noopener noreferrer">IANA TCP Parameters ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc7323.html" target="_blank" rel="noopener noreferrer">RFC7323 · Window Scale ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

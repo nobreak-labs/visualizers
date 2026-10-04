@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="8바이트 UDP 헤더와 데이터, 주요 서비스 포트를 살펴보세요." />
+  <title>UDP Datagram | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>UDP Datagram</h1>
+        <p class="subtitle">8바이트 UDP 헤더와 데이터, 주요 서비스 포트를 살펴보세요.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div><span class="section-kicker">TRANSPORT LAYER</span><h2 id="diagram-title">UDP 데이터그램 헤더</h2></div>
+        <span class="diagram-meta">한 행 32비트 · 비트 / 바이트 오프셋</span>
+      </div>
+      <div class="packet-layout">
+<figure class="packet-example"><figcaption>UDP 헤더 · 8 B (64 bits)</figcaption><div class="wire-scroll"><div class="packet-grid" style="--packet-columns: 32; --packet-rows: 2" role="group" aria-label="UDP 헤더 · 8 B (64 bits) · 가로 바이트와 비트 · 세로 바이트와 비트 오프셋">
+<span class="packet-axis" style="grid-row:1;grid-column:1">오프셋</span><span class="packet-axis" style="grid-row:1;grid-column:2">바이트</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:3 / span 8">0</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:11 / span 8">1</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:19 / span 8">2</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:27 / span 8">3</span><span class="packet-axis" style="grid-row:2;grid-column:1">바이트</span><span class="packet-axis" style="grid-row:2;grid-column:2">비트</span><span class="packet-axis" style="grid-row:2;grid-column:3">0</span><span class="packet-axis" style="grid-row:2;grid-column:4">1</span><span class="packet-axis" style="grid-row:2;grid-column:5">2</span><span class="packet-axis" style="grid-row:2;grid-column:6">3</span><span class="packet-axis" style="grid-row:2;grid-column:7">4</span><span class="packet-axis" style="grid-row:2;grid-column:8">5</span><span class="packet-axis" style="grid-row:2;grid-column:9">6</span><span class="packet-axis" style="grid-row:2;grid-column:10">7</span><span class="packet-axis" style="grid-row:2;grid-column:11">8</span><span class="packet-axis" style="grid-row:2;grid-column:12">9</span><span class="packet-axis" style="grid-row:2;grid-column:13">10</span><span class="packet-axis" style="grid-row:2;grid-column:14">11</span><span class="packet-axis" style="grid-row:2;grid-column:15">12</span><span class="packet-axis" style="grid-row:2;grid-column:16">13</span><span class="packet-axis" style="grid-row:2;grid-column:17">14</span><span class="packet-axis" style="grid-row:2;grid-column:18">15</span><span class="packet-axis" style="grid-row:2;grid-column:19">16</span><span class="packet-axis" style="grid-row:2;grid-column:20">17</span><span class="packet-axis" style="grid-row:2;grid-column:21">18</span><span class="packet-axis" style="grid-row:2;grid-column:22">19</span><span class="packet-axis" style="grid-row:2;grid-column:23">20</span><span class="packet-axis" style="grid-row:2;grid-column:24">21</span><span class="packet-axis" style="grid-row:2;grid-column:25">22</span><span class="packet-axis" style="grid-row:2;grid-column:26">23</span><span class="packet-axis" style="grid-row:2;grid-column:27">24</span><span class="packet-axis" style="grid-row:2;grid-column:28">25</span><span class="packet-axis" style="grid-row:2;grid-column:29">26</span><span class="packet-axis" style="grid-row:2;grid-column:30">27</span><span class="packet-axis" style="grid-row:2;grid-column:31">28</span><span class="packet-axis" style="grid-row:2;grid-column:32">29</span><span class="packet-axis" style="grid-row:2;grid-column:33">30</span><span class="packet-axis" style="grid-row:2;grid-column:34">31</span><span class="packet-offset" style="grid-row:3;grid-column:1">0</span><span class="packet-offset" style="grid-row:3;grid-column:2">0</span>
+<span class="packet-offset" style="grid-row:4;grid-column:1">4</span><span class="packet-offset" style="grid-row:4;grid-column:2">32</span>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:3 / span 16" title="Source Port · 2 B · 16 bits"><strong>Source Port</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:19 / span 16" title="Destination Port · 2 B · 16 bits"><strong>Destination Port</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:3 / span 16" title="UDP Length · 2 B · 16 bits"><strong>Length</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:19 / span 16" title="UDP Checksum · 2 B · 16 bits"><strong>Checksum</strong><small>2 B · 16 bits</small></div>
+</div><div class="packet-tail"><span class="packet-offset">8</span><span class="packet-offset">64</span><div class="packet-tail-field data"><strong>Data</strong><small>가변 길이</small><span>일반 UDP: 데이터 길이 = Length − 8 B</span></div></div></div></figure><div class="field-description-scroll"><table class="field-descriptions"><caption>필드 이름과 역할</caption><thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead><tbody>
+<tr><th scope="row">Source Port</th><td>Source Port</td><td>2 B · 16 bits</td><td>송신 애플리케이션의 포트입니다. RFC768은 사용하지 않는 경우 0으로 설정하도록 정의합니다. 이 규칙은 체크섬의 IPv4·IPv6 차이와 별개입니다.</td></tr>
+<tr><th scope="row">Destination Port</th><td>Destination Port</td><td>2 B · 16 bits</td><td>수신 애플리케이션의 포트입니다.<ul class="field-values"><li><code>53</code> — DNS</li><li><code>67 / 68</code> — DHCPv4 서버 / 클라이언트</li><li><code>69</code> — TFTP</li><li><code>123</code> — NTP</li><li><code>443</code> — QUIC / HTTP/3</li><li><code>546 / 547</code> — DHCPv6 클라이언트 / 서버</li></ul></td></tr>
+<tr><th scope="row">Length</th><td>UDP Length</td><td>2 B · 16 bits</td><td>UDP 헤더와 데이터를 합한 바이트 길이입니다. 일반 형식은 8–65,535 B입니다. IPv6 점보그램에서 UDP 헤더와 데이터의 합이 65,535 B를 초과할 때만 0으로 설정합니다.</td></tr>
+<tr><th scope="row">Checksum</th><td>UDP Checksum</td><td>2 B · 16 bits</td><td>IP 의사 헤더, UDP 헤더와 데이터를 검사합니다. 계산 결과가 0이면 0xFFFF를 기록합니다. IPv4에서 필드 값 0은 체크섬 미사용을 뜻합니다. IPv6에서는 기본적으로 필수이며 특정 터널 프로토콜에 제한적인 예외가 있습니다.</td></tr>
+<tr><th scope="row">Data</th><td>Application Data</td><td>가변 길이</td><td>UDP가 운반하는 애플리케이션 메시지입니다.</td></tr>
+</tbody></table></div>
+      </div>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/User_Datagram_Protocol" target="_blank" rel="noopener noreferrer">User Datagram Protocol (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc768.html" target="_blank" rel="noopener noreferrer">RFC768 ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc2675.html" target="_blank" rel="noopener noreferrer">RFC2675 · UDP 점보그램 ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc8200.html#section-8.1" target="_blank" rel="noopener noreferrer">RFC8200 §8.1 · IPv6 체크섬 ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

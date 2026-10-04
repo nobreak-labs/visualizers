@@ -212,6 +212,49 @@ h1 { margin: 6px 0 0; font-size: clamp(27px, 3vw, 43px); line-height: 1.1; lette
 :root[data-theme="light"] .slide-progress span.past { background: #85b9aa; }
 :root[data-theme="light"] .slide-navigation button { background: #edf4fb; }
 @keyframes inspectorEnter { from { opacity: .3; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+/* 데스크톱 강의 화면에서는 글자 크기를 유지하고 구성도 여백을 줄입니다. */
+@media (min-width: 1500px) and (max-height: 1100px) {
+  .app-shell { padding-top: 14px; padding-bottom: 12px; }
+  .back-link { margin-bottom: 10px; }
+  .topbar { padding-bottom: 14px; }
+  .diagram-stage, .diagram-stage.ha-mode { min-height: 0; padding: 18px; gap: 28px; }
+  .cluster-boundary { padding: 18px; }
+  .cluster-title { margin-bottom: 10px; }
+  .cluster-symbol { width: 32px; height: 32px; }
+  .control-plane, .ha-control-plane { padding: 16px; }
+  .cp-grid { gap: 18px; }
+  .official-icon { width: 40px; height: 40px; }
+  .component-glyph.text-badge { height: 34px; }
+  .node-section-heading { margin: 20px 1px 12px; }
+  .nodes { gap: 22px; }
+  .worker-node { padding: 16px; }
+  .node-components, .runtime-stack, .pod-row { gap: 16px; }
+  .ha-load-balancer { margin-bottom: 18px; }
+  .ha-members, .etcd-members { gap: 22px; }
+  .ha-member { padding: 12px; }
+  .ha-member-heading { margin-bottom: 10px; }
+  .ha-member .component { width: 100%; margin-top: 10px; display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 8px; padding: 6px 8px; text-align: left; min-height: 46px; }
+  .ha-member .official-icon { grid-column: 1; grid-row: 1 / 3; width: 32px; height: 32px; }
+  .ha-member .component strong, .ha-member .component small { grid-column: 2; }
+  .ha-member .component strong { align-self: end; }
+  .ha-member .component small { align-self: start; }
+  .ha-member { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .ha-member-heading { grid-column: 1 / -1; margin: 0; }
+  .ha-member .component { margin: 0; }
+  .ha-member .component:first-of-type { grid-column: 1 / -1; }
+  .node-components { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .runtime-stack, .pod-row { display: contents; }
+  .worker-node .component { width: 100%; display: grid; grid-template-columns: 32px minmax(0, 1fr); column-gap: 6px; text-align: left; min-height: 60px; }
+  .worker-node .component > .component-glyph { grid-column: 1; grid-row: 1 / 3; }
+  .worker-node .official-icon { width: 32px; height: 32px; }
+  .worker-node .component strong, .worker-node .component small { grid-column: 2; }
+  .worker-node .text-badge { min-width: 32px; height: 30px; padding: 0 2px; font-size: 11px; }
+  .diagram-stage.stacked-mode .ha-control-plane { padding-bottom: 40px; }
+  .cluster-boundary > .etcd-cluster { margin-top: 18px; }
+  .etcd-cluster { padding: 14px 16px 36px; }
+  .etcd-heading { margin-bottom: 10px; }
+  .diagram-stage.ha-mode .external-cloud { margin-top: 180px; }
+}
 @media (max-width: 1150px) { .workspace { flex: none; grid-template-columns: 1fr; } .diagram-stage, .diagram-stage.ha-mode { flex: none; min-height: 0; } .inspector { position: static; height: auto; min-height: 270px; } .inspector-content { padding-top: 20px; } .inspector-icon { float: left; margin: 0 18px 8px 0; } .inspector-detail { clear: both; margin-top: 20px; } }
 @media (max-width: 899px) { .app-shell { width: min(100% - 24px, 600px); padding-top: 15px; } .topbar { align-items: flex-start; flex-direction: column; gap: 12px; } .topbar-meta { justify-content: flex-start; } .diagram-heading { padding: 13px 14px; align-items: flex-start; flex-direction: column; } .diagram-actions { width: 100%; justify-content: space-between; } .diagram-tip { font-size: 10px; } .diagram-stage { display: block; padding: 14px; min-height: 0; } .entry-area, .diagram-stage.ha-mode .entry-area { margin: 0 0 20px; } .entry-area > p { display: none; } .external-cloud, .diagram-stage.ha-mode .external-cloud { margin-top: 20px; } .entry-card { max-width: 270px; } .cluster-boundary { padding: 18px; } .cluster-count { display: none; } .control-plane { padding: 18px; } .cp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; } .cp-primary { grid-row: auto; } .ha-control-plane { padding: 14px; } .ha-members { grid-template-columns: 1fr; gap: 20px; } .ha-member { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 14px; } .ha-member-heading { grid-column: 1 / -1; margin: 0; } .ha-member .component { margin: 0 auto; } .etcd-members { gap: 16px; } .nodes { grid-template-columns: 1fr; gap: 20px; } .worker-node { padding: 16px; } .node-components, .runtime-stack, .pod-row { gap: 18px; } .node-section-heading { flex-direction: column; align-items: flex-start; gap: 3px; } .wires { display: none; } .diagram-footnote { line-height: 1.5; padding: 10px 14px; } .sources { flex-wrap: wrap; line-height: 1.4; } }
 @media (max-width: 390px) { .runtime-stack { grid-template-columns: repeat(2, minmax(0, 1fr)); } .runtime-stack .component:last-child { grid-column: 1 / -1; } .area-subtitle { display: none; } }

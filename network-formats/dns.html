@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="DNS 공통 헤더, 플래그와 네 개의 메시지 영역을 살펴보세요." />
+  <title>DNS Message | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>DNS Message</h1>
+        <p class="subtitle">DNS 공통 헤더, 플래그와 네 개의 메시지 영역을 살펴보세요.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div><span class="section-kicker">APPLICATION LAYER</span><h2 id="diagram-title">DNS 메시지</h2></div>
+        <span class="diagram-meta">한 행 32비트 · 비트 / 바이트 오프셋</span>
+      </div>
+      <div class="packet-layout">
+<figure class="packet-example"><figcaption>DNS 헤더 · 12 B (96 bits)</figcaption><div class="wire-scroll"><div class="packet-grid" style="--packet-columns: 32; --packet-rows: 3" role="group" aria-label="DNS 헤더 · 12 B (96 bits) · 가로 바이트와 비트 · 세로 바이트와 비트 오프셋">
+<span class="packet-axis" style="grid-row:1;grid-column:1">오프셋</span><span class="packet-axis" style="grid-row:1;grid-column:2">바이트</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:3 / span 8">0</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:11 / span 8">1</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:19 / span 8">2</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:27 / span 8">3</span><span class="packet-axis" style="grid-row:2;grid-column:1">바이트</span><span class="packet-axis" style="grid-row:2;grid-column:2">비트</span><span class="packet-axis" style="grid-row:2;grid-column:3">0</span><span class="packet-axis" style="grid-row:2;grid-column:4">1</span><span class="packet-axis" style="grid-row:2;grid-column:5">2</span><span class="packet-axis" style="grid-row:2;grid-column:6">3</span><span class="packet-axis" style="grid-row:2;grid-column:7">4</span><span class="packet-axis" style="grid-row:2;grid-column:8">5</span><span class="packet-axis" style="grid-row:2;grid-column:9">6</span><span class="packet-axis" style="grid-row:2;grid-column:10">7</span><span class="packet-axis" style="grid-row:2;grid-column:11">8</span><span class="packet-axis" style="grid-row:2;grid-column:12">9</span><span class="packet-axis" style="grid-row:2;grid-column:13">10</span><span class="packet-axis" style="grid-row:2;grid-column:14">11</span><span class="packet-axis" style="grid-row:2;grid-column:15">12</span><span class="packet-axis" style="grid-row:2;grid-column:16">13</span><span class="packet-axis" style="grid-row:2;grid-column:17">14</span><span class="packet-axis" style="grid-row:2;grid-column:18">15</span><span class="packet-axis" style="grid-row:2;grid-column:19">16</span><span class="packet-axis" style="grid-row:2;grid-column:20">17</span><span class="packet-axis" style="grid-row:2;grid-column:21">18</span><span class="packet-axis" style="grid-row:2;grid-column:22">19</span><span class="packet-axis" style="grid-row:2;grid-column:23">20</span><span class="packet-axis" style="grid-row:2;grid-column:24">21</span><span class="packet-axis" style="grid-row:2;grid-column:25">22</span><span class="packet-axis" style="grid-row:2;grid-column:26">23</span><span class="packet-axis" style="grid-row:2;grid-column:27">24</span><span class="packet-axis" style="grid-row:2;grid-column:28">25</span><span class="packet-axis" style="grid-row:2;grid-column:29">26</span><span class="packet-axis" style="grid-row:2;grid-column:30">27</span><span class="packet-axis" style="grid-row:2;grid-column:31">28</span><span class="packet-axis" style="grid-row:2;grid-column:32">29</span><span class="packet-axis" style="grid-row:2;grid-column:33">30</span><span class="packet-axis" style="grid-row:2;grid-column:34">31</span><span class="packet-offset" style="grid-row:3;grid-column:1">0</span><span class="packet-offset" style="grid-row:3;grid-column:2">0</span>
+<span class="packet-offset" style="grid-row:4;grid-column:1">4</span><span class="packet-offset" style="grid-row:4;grid-column:2">32</span>
+<span class="packet-offset" style="grid-row:5;grid-column:1">8</span><span class="packet-offset" style="grid-row:5;grid-column:2">64</span>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:3 / span 16" title="Transaction Identifier · 2 B · 16 bits"><strong>ID</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:19 / span 1" title="Query / Response · 1 bit"><strong>QR</strong><small>1 bit</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:20 / span 4" title="Operation Code · 4 bits"><strong>OPCODE</strong><small>4 bits</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:24 / span 1" title="Authoritative Answer · 1 bit"><strong>AA</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:25 / span 1" title="Truncated · 1 bit"><strong>TC</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:26 / span 1" title="Recursion Desired · 1 bit"><strong>RD</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:27 / span 1" title="Recursion Available · 1 bit"><strong>RA</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:28 / span 1" title="Reserved · 1 bit"><strong>Z</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:29 / span 1" title="Authentic Data · 1 bit"><strong>AD</strong><small>1 bit</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:30 / span 1" title="Checking Disabled · 1 bit"><strong>CD</strong><small>1 bit</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:31 / span 4" title="Response Code · 4 bits"><strong>RCODE</strong><small>4 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:3 / span 16" title="Question Count · 2 B · 16 bits"><strong>QDCOUNT</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:19 / span 16" title="Answer Record Count · 2 B · 16 bits"><strong>ANCOUNT</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 1;grid-column:3 / span 16" title="Authority Record Count · 2 B · 16 bits"><strong>NSCOUNT</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 1;grid-column:19 / span 16" title="Additional Record Count · 2 B · 16 bits"><strong>ARCOUNT</strong><small>2 B · 16 bits</small></div>
+</div><div class="packet-tail"><span class="packet-offset">12</span><span class="packet-offset">96</span><div class="packet-tail-field data"><strong>Question → Answer → Authority → Additional</strong><small>각 영역 가변 길이</small><span>각 COUNT 값에 따른 항목 수 · 가변 영역 축약</span></div></div></div></figure><div class="packet-sections"><div><strong>Question</strong><span>QNAME (가변) → QTYPE (2 B · 16 bits) → QCLASS (2 B · 16 bits)</span></div><div><strong>Resource Record · Answer / Authority / Additional</strong><span>NAME (가변) → TYPE (2 B) → CLASS (2 B) → TTL (4 B) → RDLENGTH (2 B) → RDATA (가변)</span></div></div><div class="field-description-scroll"><table class="field-descriptions"><caption>필드 이름과 역할</caption><thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead><tbody>
+<tr><th scope="row">ID</th><td>Transaction Identifier</td><td>2 B · 16 bits</td><td>질의와 응답을 대응시키는 거래 식별자입니다.</td></tr>
+<tr><th scope="row">Flags</th><td>Message Flags</td><td>2 B · 16 bits</td><td>질의·응답 구분, 처리 방식 및 응답 상태를 담습니다. 헤더 첫 행의 뒤쪽 16비트에 세부 필드를 표시합니다.</td></tr>
+<tr><th scope="row">QDCOUNT</th><td>Question Count</td><td>2 B · 16 bits</td><td>일반 QUERY의 Question 영역 항목 수입니다. OPCODE=0에서는 0 또는 1만 허용하며, 1보다 크면 FORMERR로 처리합니다.</td></tr>
+<tr><th scope="row">ANCOUNT</th><td>Answer Record Count</td><td>2 B · 16 bits</td><td>Answer 영역의 리소스 레코드 개수입니다.</td></tr>
+<tr><th scope="row">NSCOUNT</th><td>Authority Record Count</td><td>2 B · 16 bits</td><td>Authority 영역의 리소스 레코드 개수입니다.</td></tr>
+<tr><th scope="row">ARCOUNT</th><td>Additional Record Count</td><td>2 B · 16 bits</td><td>Additional 영역의 리소스 레코드 개수입니다.</td></tr>
+<tr><th scope="row">QR</th><td>Query / Response</td><td>1 bit</td><td>메시지가 질의인지 응답인지 표시합니다.<ul class="field-values"><li><code>0</code> — 질의</li><li><code>1</code> — 응답</li></ul></td></tr>
+<tr><th scope="row">OPCODE</th><td>Operation Code</td><td>4 bits</td><td>메시지 동작을 식별합니다. 아래 영역명과 COUNT 설명은 일반 QUERY 기준이며, UPDATE·DSO는 영역의 의미나 후속 형식이 다릅니다.<ul class="field-values"><li><code>0</code> — QUERY — 일반 질의</li><li><code>4</code> — NOTIFY — 변경 통지</li><li><code>5</code> — UPDATE — 동적 갱신</li></ul></td></tr>
+<tr><th scope="row">AA</th><td>Authoritative Answer</td><td>1 bit</td><td>응답에서 서버가 질의 이름의 권한 서버임을 나타냅니다. 여러 이름이 있으면 질의 이름 또는 Answer의 첫 소유자 이름을 기준으로 해석합니다.</td></tr>
+<tr><th scope="row">TC</th><td>Truncated</td><td>1 bit</td><td>메시지가 잘렸음을 나타냅니다.</td></tr>
+<tr><th scope="row">RD</th><td>Recursion Desired</td><td>1 bit</td><td>클라이언트가 재귀 질의를 요청합니다.</td></tr>
+<tr><th scope="row">RA</th><td>Recursion Available</td><td>1 bit</td><td>서버가 재귀 질의를 제공함을 나타냅니다.</td></tr>
+<tr><th scope="row">Z</th><td>Reserved</td><td>1 bit</td><td>예약 비트로 0입니다.</td></tr>
+<tr><th scope="row">AD</th><td>Authentic Data</td><td>1 bit</td><td>응답에서는 리졸버가 Answer·Authority의 모든 RRset을 authentic하다고 판단했음을 나타냅니다. Additional 전체의 검증을 보장하지 않습니다. 질의에서는 AD 의미를 이해하고 응답의 AD 값에 관심이 있음을 표시합니다.</td></tr>
+<tr><th scope="row">CD</th><td>Checking Disabled</td><td>1 bit</td><td>클라이언트가 DNSSEC 검증을 비활성화하도록 요청합니다.</td></tr>
+<tr><th scope="row">RCODE</th><td>Response Code</td><td>4 bits</td><td>기본 응답 상태 코드입니다. EDNS는 이를 확장할 수 있습니다.<ul class="field-values"><li><code>0</code> — NOERROR — 오류 없음</li><li><code>1</code> — FORMERR — 형식 오류</li><li><code>2</code> — SERVFAIL — 서버 처리 실패</li><li><code>3</code> — NXDOMAIN — 이름 없음</li><li><code>4</code> — NOTIMP — 미구현</li><li><code>5</code> — REFUSED — 처리 거부</li></ul></td></tr>
+<tr><th scope="row">Question</th><td>Question Section</td><td>가변 길이</td><td>QNAME, QTYPE, QCLASS로 이루어진 질의 영역입니다.</td></tr>
+<tr><th scope="row">QNAME</th><td>Question Name</td><td>가변 길이</td><td>비압축 도메인 이름은 길이 바이트와 라벨들로 표현하고 루트의 길이 0 바이트로 끝납니다. 라벨은 최대 63바이트이며 비압축 이름 전체는 길이 바이트와 마지막 0을 포함해 최대 255바이트입니다. 압축하면 이름 전체 또는 뒤쪽 부분을 메시지 내 이전 이름에 대한 포인터로 대체하며, 해당 인코딩은 포인터로 끝납니다.</td></tr>
+<tr><th scope="row">QTYPE / TYPE</th><td>Question Type / Resource Record Type</td><td>2 B · 16 bits</td><td>QTYPE은 질의 유형이고 TYPE은 반환하는 리소스 레코드 유형입니다. 아래에는 일반적인 레코드 유형을 표시합니다.<ul class="field-values"><li><code>1</code> — A — IPv4 주소</li><li><code>2</code> — NS — 권한 서버</li><li><code>5</code> — CNAME — 별칭</li><li><code>6</code> — SOA — 영역 관리 정보</li><li><code>12</code> — PTR — 역방향 이름</li><li><code>15</code> — MX — 메일 교환 서버</li><li><code>16</code> — TXT — 텍스트</li><li><code>28</code> — AAAA — IPv6 주소</li><li><code>33</code> — SRV — 서비스 위치</li><li><code>65</code> — HTTPS — HTTPS 서비스 바인딩</li></ul></td></tr>
+<tr><th scope="row">QCLASS / CLASS</th><td>Question Class / Resource Record Class</td><td>2 B · 16 bits</td><td>질의·레코드의 클래스입니다. 일반적인 인터넷 DNS의 IN 클래스를 표시합니다.<ul class="field-values"><li><code>1</code> — IN — Internet</li></ul></td></tr>
+<tr><th scope="row">Answer</th><td>Answer Section</td><td>가변 길이</td><td>질의에 대한 답을 담는 리소스 레코드 영역입니다.</td></tr>
+<tr><th scope="row">Authority</th><td>Authority Section</td><td>가변 길이</td><td>권한 서버 관련 리소스 레코드 영역입니다.</td></tr>
+<tr><th scope="row">Additional</th><td>Additional Section</td><td>가변 길이</td><td>추가 정보를 담는 리소스 레코드 영역입니다. EDNS의 OPT도 이 영역에 놓입니다.</td></tr>
+<tr><th scope="row">NAME</th><td>Resource Record Name</td><td>가변 길이</td><td>리소스 레코드가 적용되는 도메인 이름입니다.</td></tr>
+<tr><th scope="row">TTL</th><td>Time to Live</td><td>4 B · 32 bits</td><td>일반 RR을 캐시에 보관할 수 있는 최대 시간(초)입니다. 필드는 32비트지만 유효 범위는 0–2^31−1이며, 최상위 비트가 1인 수신 값은 0으로 취급합니다. EDNS의 OPT 의사 레코드는 이 위치를 TTL 대신 확장 RCODE·버전·플래그에 사용합니다.</td></tr>
+<tr><th scope="row">RDLENGTH</th><td>Resource Data Length</td><td>2 B · 16 bits</td><td>RDATA의 바이트 길이입니다.</td></tr>
+<tr><th scope="row">RDATA</th><td>Resource Data</td><td>가변 길이</td><td>TYPE에 따른 실제 레코드 데이터입니다.</td></tr>
+</tbody></table></div>
+      </div>
+      <p class="diagram-note">이 도표는 일반 DNS 질의·응답의 메시지 구조입니다. TCP 전송에서는 DNS 메시지 앞에 2바이트 길이 필드가 붙으며, 이 필드는 12바이트 DNS 헤더에 포함되지 않습니다.</p>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/Domain_Name_System" target="_blank" rel="noopener noreferrer">Domain Name System (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc1035.html" target="_blank" rel="noopener noreferrer">RFC1035 ↗</a> · <a href="https://www.iana.org/assignments/dns-parameters/" target="_blank" rel="noopener noreferrer">IANA DNS Parameters ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc9619.html" target="_blank" rel="noopener noreferrer">RFC9619 · QDCOUNT ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc6840.html" target="_blank" rel="noopener noreferrer">RFC6840 · AD ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc4035.html" target="_blank" rel="noopener noreferrer">RFC4035 · DNSSEC ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc2181.html#section-8" target="_blank" rel="noopener noreferrer">RFC2181 · TTL ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc6891.html#section-6.1.3" target="_blank" rel="noopener noreferrer">RFC6891 · OPT ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

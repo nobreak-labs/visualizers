@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="IPv4 헤더의 비트 배치와 길이, 단편화 제어 및 프로토콜 값을 살펴보세요." />
+  <title>IPv4 Packet | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>IPv4 Packet</h1>
+        <p class="subtitle">IPv4 헤더의 비트 배치와 길이, 단편화 제어 및 프로토콜 값을 살펴보세요.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div><span class="section-kicker">NETWORK LAYER</span><h2 id="diagram-title">IPv4 헤더</h2></div>
+        <span class="diagram-meta">한 행 32비트 · 비트 / 바이트 오프셋</span>
+      </div>
+      <div class="packet-layout">
+<figure class="packet-example"><figcaption>IPv4 헤더 · 20–60 B (160–480 bits)</figcaption><div class="wire-scroll"><div class="packet-grid" style="--packet-columns: 32; --packet-rows: 5" role="group" aria-label="IPv4 헤더 · 20–60 B (160–480 bits) · 가로 바이트와 비트 · 세로 바이트와 비트 오프셋">
+<span class="packet-axis" style="grid-row:1;grid-column:1">오프셋</span><span class="packet-axis" style="grid-row:1;grid-column:2">바이트</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:3 / span 8">0</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:11 / span 8">1</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:19 / span 8">2</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:27 / span 8">3</span><span class="packet-axis" style="grid-row:2;grid-column:1">바이트</span><span class="packet-axis" style="grid-row:2;grid-column:2">비트</span><span class="packet-axis" style="grid-row:2;grid-column:3">0</span><span class="packet-axis" style="grid-row:2;grid-column:4">1</span><span class="packet-axis" style="grid-row:2;grid-column:5">2</span><span class="packet-axis" style="grid-row:2;grid-column:6">3</span><span class="packet-axis" style="grid-row:2;grid-column:7">4</span><span class="packet-axis" style="grid-row:2;grid-column:8">5</span><span class="packet-axis" style="grid-row:2;grid-column:9">6</span><span class="packet-axis" style="grid-row:2;grid-column:10">7</span><span class="packet-axis" style="grid-row:2;grid-column:11">8</span><span class="packet-axis" style="grid-row:2;grid-column:12">9</span><span class="packet-axis" style="grid-row:2;grid-column:13">10</span><span class="packet-axis" style="grid-row:2;grid-column:14">11</span><span class="packet-axis" style="grid-row:2;grid-column:15">12</span><span class="packet-axis" style="grid-row:2;grid-column:16">13</span><span class="packet-axis" style="grid-row:2;grid-column:17">14</span><span class="packet-axis" style="grid-row:2;grid-column:18">15</span><span class="packet-axis" style="grid-row:2;grid-column:19">16</span><span class="packet-axis" style="grid-row:2;grid-column:20">17</span><span class="packet-axis" style="grid-row:2;grid-column:21">18</span><span class="packet-axis" style="grid-row:2;grid-column:22">19</span><span class="packet-axis" style="grid-row:2;grid-column:23">20</span><span class="packet-axis" style="grid-row:2;grid-column:24">21</span><span class="packet-axis" style="grid-row:2;grid-column:25">22</span><span class="packet-axis" style="grid-row:2;grid-column:26">23</span><span class="packet-axis" style="grid-row:2;grid-column:27">24</span><span class="packet-axis" style="grid-row:2;grid-column:28">25</span><span class="packet-axis" style="grid-row:2;grid-column:29">26</span><span class="packet-axis" style="grid-row:2;grid-column:30">27</span><span class="packet-axis" style="grid-row:2;grid-column:31">28</span><span class="packet-axis" style="grid-row:2;grid-column:32">29</span><span class="packet-axis" style="grid-row:2;grid-column:33">30</span><span class="packet-axis" style="grid-row:2;grid-column:34">31</span><span class="packet-offset" style="grid-row:3;grid-column:1">0</span><span class="packet-offset" style="grid-row:3;grid-column:2">0</span>
+<span class="packet-offset" style="grid-row:4;grid-column:1">4</span><span class="packet-offset" style="grid-row:4;grid-column:2">32</span>
+<span class="packet-offset" style="grid-row:5;grid-column:1">8</span><span class="packet-offset" style="grid-row:5;grid-column:2">64</span>
+<span class="packet-offset" style="grid-row:6;grid-column:1">12</span><span class="packet-offset" style="grid-row:6;grid-column:2">96</span>
+<span class="packet-offset" style="grid-row:7;grid-column:1">16</span><span class="packet-offset" style="grid-row:7;grid-column:2">128</span>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:3 / span 4" title="Internet Protocol Version · 4 bits"><strong>Version</strong><small>4 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:7 / span 4" title="Internet Header Length · 4 bits"><strong>IHL</strong><small>4 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:11 / span 6" title="Differentiated Services Code Point · 6 bits"><strong>DSCP</strong><small>6 bits</small></div>
+<div class="packet-field narrow" style="grid-row:3 / span 1;grid-column:17 / span 2" title="Explicit Congestion Notification · 2 bits"><strong>ECN</strong><small>2 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:19 / span 16" title="Total Length · 2 B · 16 bits"><strong>Total Length</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:3 / span 16" title="Identification · 2 B · 16 bits"><strong>Identification</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field narrow" style="grid-row:4 / span 1;grid-column:19 / span 3" title="Fragmentation Flags · 3 bits"><strong>Flags</strong><small>3 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:22 / span 13" title="Fragment Offset · 13 bits"><strong>Fragment Offset</strong><small>13 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 1;grid-column:3 / span 8" title="Time to Live · 1 B · 8 bits"><strong>TTL</strong><small>1 B · 8 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 1;grid-column:11 / span 8" title="Protocol · 1 B · 8 bits"><strong>Protocol</strong><small>1 B · 8 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 1;grid-column:19 / span 16" title="Header Checksum · 2 B · 16 bits"><strong>Header Checksum</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:6 / span 1;grid-column:3 / span 32" title="Source IPv4 Address · 4 B · 32 bits"><strong>Source Address</strong><small>4 B · 32 bits</small></div>
+<div class="packet-field" style="grid-row:7 / span 1;grid-column:3 / span 32" title="Destination IPv4 Address · 4 B · 32 bits"><strong>Destination Address</strong><small>4 B · 32 bits</small></div>
+</div><div class="packet-tail"><span class="packet-offset">20</span><span class="packet-offset">160</span><div class="packet-tail-field optional"><strong>Options + Padding</strong><small>0–40 B · 0–320 bits</small><span>IHL &gt; 5일 때 존재 · 가변 영역 축약</span></div></div><div class="packet-tail"><span class="packet-offset">가변</span><span class="packet-offset">가변</span><div class="packet-tail-field data"><strong>Data</strong><small>가변 길이</small><span>시작 오프셋 = IHL × 4 B</span></div></div></div></figure><div class="field-description-scroll"><table class="field-descriptions"><caption>필드 이름과 역할</caption><thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead><tbody>
+<tr><th scope="row">Version</th><td>Internet Protocol Version</td><td>4 bits</td><td>IPv4에서는 값이 4입니다.</td></tr>
+<tr><th scope="row">IHL</th><td>Internet Header Length</td><td>4 bits</td><td>헤더 길이를 4바이트 단위로 표시합니다.<ul class="field-values"><li><code>5</code> — 20 B — 옵션 없음</li><li><code>6–15</code> — 24–60 B — 옵션 포함</li></ul></td></tr>
+<tr><th scope="row">DSCP</th><td>Differentiated Services Code Point</td><td>6 bits</td><td>서비스 등급을 식별합니다. 주요 값은 다음과 같습니다.<ul class="field-values"><li><code>0</code> — CS0 / 기본 전달</li><li><code>34</code> — AF41</li><li><code>46</code> — EF — 신속 전달</li><li><code>48</code> — CS6 — 네트워크 제어</li></ul></td></tr>
+<tr><th scope="row">ECN</th><td>Explicit Congestion Notification</td><td>2 bits</td><td>혼잡 통지를 나타냅니다.<ul class="field-values"><li><code>0 (00)</code> — Not-ECT — ECN 미지원</li><li><code>1 (01)</code> — ECT(1) — ECN 사용 가능</li><li><code>2 (10)</code> — ECT(0) — ECN 사용 가능</li><li><code>3 (11)</code> — CE — 혼잡 경험</li></ul></td></tr>
+<tr><th scope="row">Total Length</th><td>Total Length</td><td>2 B · 16 bits</td><td>IPv4 헤더와 데이터를 합한 전체 바이트 길이입니다. 최대 65,535 B입니다.</td></tr>
+<tr><th scope="row">Identification</th><td>Identification</td><td>2 B · 16 bits</td><td>단편화·재조립에서 같은 데이터그램의 조각을 식별합니다. DF=1, MF=0, Fragment Offset=0인 atomic 데이터그램에서는 의미가 없으며 수신자는 무시합니다.</td></tr>
+<tr><th scope="row">Flags</th><td>Fragmentation Flags</td><td>3 bits</td><td>단편화 제어 비트입니다.<ul class="field-values"><li><code>Reserved</code> — 예약 비트, 0</li><li><code>DF</code> — Don’t Fragment — 단편화 금지</li><li><code>MF</code> — More Fragments — 뒤에 조각이 더 있음</li></ul></td></tr>
+<tr><th scope="row">Fragment Offset</th><td>Fragment Offset</td><td>13 bits</td><td>원본 데이터에서 이 조각의 위치를 8바이트 단위로 표시합니다.</td></tr>
+<tr><th scope="row">TTL</th><td>Time to Live</td><td>1 B · 8 bits</td><td>라우터를 거칠 때 감소하며 0이 되면 패킷을 폐기합니다.</td></tr>
+<tr><th scope="row">Protocol</th><td>Protocol</td><td>1 B · 8 bits</td><td>데이터에 담긴 다음 프로토콜을 식별합니다.<ul class="field-values"><li><code>1</code> — ICMP</li><li><code>6</code> — TCP</li><li><code>17</code> — UDP</li><li><code>47</code> — GRE</li><li><code>50</code> — ESP</li><li><code>89</code> — OSPF</li></ul></td></tr>
+<tr><th scope="row">Header Checksum</th><td>Header Checksum</td><td>2 B · 16 bits</td><td>IPv4 헤더만 검사하는 16비트 체크섬입니다.</td></tr>
+<tr><th scope="row">Source Address</th><td>Source IPv4 Address</td><td>4 B · 32 bits</td><td>송신자의 IPv4 주소입니다.</td></tr>
+<tr><th scope="row">Destination Address</th><td>Destination IPv4 Address</td><td>4 B · 32 bits</td><td>수신자의 IPv4 주소입니다.</td></tr>
+<tr><th scope="row">Options + Padding</th><td>Options and Padding</td><td>0–40 B · 0–320 bits</td><td>선택적 헤더 정보입니다. 헤더 전체를 4바이트 배수로 맞춥니다.<ul class="field-values"><li><code>0</code> — End of Option List</li><li><code>1</code> — No Operation</li></ul></td></tr>
+<tr><th scope="row">Data</th><td>Payload</td><td>가변 길이</td><td>상위 프로토콜의 헤더와 데이터를 담습니다. 헤더 뒤에서 시작합니다.</td></tr>
+</tbody></table></div>
+      </div>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/IPv4" target="_blank" rel="noopener noreferrer">IPv4 (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc791.html" target="_blank" rel="noopener noreferrer">RFC791 ↗</a> · <a href="https://www.iana.org/assignments/protocol-numbers/" target="_blank" rel="noopener noreferrer">IANA Protocol Numbers ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc6864.html" target="_blank" rel="noopener noreferrer">RFC6864 · Identification ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc2474.html" target="_blank" rel="noopener noreferrer">RFC2474 · DSCP ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc3168.html" target="_blank" rel="noopener noreferrer">RFC3168 · ECN ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

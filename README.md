@@ -6,6 +6,7 @@
 
 - [Load Balancer](load-balancer/) — 로드밸런싱 알고리즘과 요청 흐름 시뮬레이터
 - [Kubernetes Architecture](kubernetes/) — 구성요소를 클릭하거나 방향키로 넘기는 아키텍처 시각화
+- [Network Formats](network-formats/) — Ethernet부터 HTTP까지 프로토콜 구조와 주요 메시지 형식
 
 ## 공통 스타일 관리
 

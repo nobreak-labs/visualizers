@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ethernet에서 IPv4 주소를 MAC 주소로 찾을 때 쓰는 ARP 형식입니다." />
+  <title>ARP Message | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>ARP Message</h1>
+        <p class="subtitle">Ethernet에서 IPv4 주소를 MAC 주소로 찾을 때 쓰는 ARP 형식입니다.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div>
+          <span class="section-kicker">L2 / L3 ADDRESS RESOLUTION</span>
+          <h2 id="diagram-title">ARP 메시지</h2>
+        </div>
+        <span class="diagram-meta">Ethernet / IPv4 예시</span>
+      </div>
+      <div class="arp-layout">
+        <figure class="wire-example">
+          <figcaption>ARP 헤더 · Ethernet / IPv4 · 28 B (224 bits)</figcaption>
+          <div class="wire-scroll">
+            <div class="arp-packet" role="group" aria-label="ARP 헤더 · 한 행 32비트 · 가로 바이트와 비트 위치 · 세로 바이트와 비트 오프셋">
+              <div class="arp-byte-ruler"><span>오프셋</span><span>바이트</span><span style="grid-column: span 8">0</span><span style="grid-column: span 8">1</span><span style="grid-column: span 8">2</span><span style="grid-column: span 8">3</span></div>
+              <div class="arp-bit-ruler"><span>바이트</span><span>비트</span><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span></div>
+              <div class="arp-row"><span class="arp-offset">0</span><span class="arp-offset">0</span><span class="arp-field" style="grid-column: span 16"><strong>HTYPE · Hardware Type</strong><small>2 B · 16 bits</small></span><span class="arp-field" style="grid-column: span 16"><strong>PTYPE · Protocol Type</strong><small>2 B · 16 bits</small></span></div>
+              <div class="arp-row"><span class="arp-offset">4</span><span class="arp-offset">32</span><span class="arp-field" style="grid-column: span 8"><strong>HLEN</strong><small>1 B · 8 bits</small></span><span class="arp-field" style="grid-column: span 8"><strong>PLEN</strong><small>1 B · 8 bits</small></span><span class="arp-field" style="grid-column: span 16"><strong>OPER · Operation</strong><small>2 B · 16 bits</small></span></div>
+              <div class="arp-row"><span class="arp-offset">8</span><span class="arp-offset">64</span><span class="arp-field" style="grid-column: span 32"><strong>SHA · Sender Hardware Address</strong><small>앞 4 B · 32 bits / 전체 6 B</small></span></div>
+              <div class="arp-row"><span class="arp-offset">12</span><span class="arp-offset">96</span><span class="arp-field" style="grid-column: span 16"><strong>SHA (계속)</strong><small>뒤 2 B · 16 bits</small></span><span class="arp-field" style="grid-column: span 16"><strong>SPA · Sender Protocol Address</strong><small>앞 2 B · 16 bits / 전체 4 B</small></span></div>
+              <div class="arp-row"><span class="arp-offset">16</span><span class="arp-offset">128</span><span class="arp-field" style="grid-column: span 16"><strong>SPA (계속)</strong><small>뒤 2 B · 16 bits</small></span><span class="arp-field" style="grid-column: span 16"><strong>THA · Target Hardware Address</strong><small>앞 2 B · 16 bits / 전체 6 B</small></span></div>
+              <div class="arp-row"><span class="arp-offset">20</span><span class="arp-offset">160</span><span class="arp-field" style="grid-column: span 32"><strong>THA (계속)</strong><small>뒤 4 B · 32 bits</small></span></div>
+              <div class="arp-row"><span class="arp-offset">24</span><span class="arp-offset">192</span><span class="arp-field" style="grid-column: span 32"><strong>TPA · Target Protocol Address</strong><small>4 B · 32 bits</small></span></div>
+            </div>
+          </div>
+        </figure>
+        <div class="field-description-scroll">
+          <table class="field-descriptions">
+            <caption>필드 이름과 역할</caption>
+            <thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">HTYPE</th><td>Hardware Type</td><td>2 B</td><td>링크 계층의 하드웨어 유형입니다. 이 도표는 Ethernet 기준입니다.
+                  <ul class="field-values">
+                    <li><code>1 (0x0001)</code> — Ethernet</li>
+                    
+                    
+                    
+                  </ul>
+                </td></tr>
+              <tr><th scope="row">PTYPE</th><td>Protocol Type</td><td>2 B</td><td>주소를 찾을 네트워크 계층 프로토콜을 식별하며 EtherType과 같은 번호 체계를 사용합니다.
+                  <ul class="field-values">
+                    <li><code>0x0800</code> — IPv4 — Ethernet에서 사용하는 일반적인 ARP 값</li>
+                    
+                    
+                  </ul>
+                  <p class="field-value-note">이 도표는 IPv4(0x0800) 기준입니다. Ethernet 헤더에서 ARP를 식별하는 0x0806은 이 필드의 IPv4 값과 구분해야 합니다.</p>
+                </td></tr>
+              <tr><th scope="row">HLEN</th><td>Hardware Length</td><td>1 B</td><td>하드웨어 주소 하나의 바이트 길이입니다. Ethernet MAC 주소는 6 B이므로 값은 6입니다.</td></tr>
+              <tr><th scope="row">PLEN</th><td>Protocol Length</td><td>1 B</td><td>프로토콜 주소 하나의 바이트 길이입니다. IPv4 주소는 4 B이므로 값은 4입니다.</td></tr>
+              <tr><th scope="row">OPER</th><td>Operation</td><td>2 B</td><td>수행할 동작을 나타냅니다. 이 도표의 ARP는 요청(1)과 응답(2)을 사용합니다.
+                  <ul class="field-values">
+                    <li><code>1 (0x0001)</code> — ARP Request — 주소 해석 요청</li>
+                    <li><code>2 (0x0002)</code> — ARP Reply — 주소 해석 응답</li>
+                    
+                    
+                    
+                    
+                  </ul>
+                </td></tr>
+              <tr><th scope="row">SHA</th><td>Sender Hardware Address</td><td>6 B · HLEN</td><td>송신자의 MAC 주소입니다. 응답에서는 조회한 IPv4 주소에 대응하는 MAC 주소를 담습니다.</td></tr>
+              <tr><th scope="row">SPA</th><td>Sender Protocol Address</td><td>4 B · PLEN</td><td>송신자의 IPv4 주소입니다.</td></tr>
+              <tr><th scope="row">THA</th><td>Target Hardware Address</td><td>6 B · HLEN</td><td>대상의 MAC 주소입니다. 요청에서는 아직 모르는 주소로 일반적으로 0으로 채우고 수신 시 무시하며, 응답에서는 요청자의 MAC 주소를 담습니다.</td></tr>
+              <tr><th scope="row">TPA</th><td>Target Protocol Address</td><td>4 B · PLEN</td><td>대상의 IPv4 주소입니다. 요청에서는 MAC 주소를 찾으려는 IPv4 주소를 담습니다.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="diagram-note">ARP는 IPv4 주소에 대응하는 MAC 주소를 찾는 주소 해석 프로토콜입니다. Ethernet 프레임으로 직접 전달되며, L3 주소와 L2 주소를 연결합니다. 계층 분류는 자료에 따라 다르므로 여기서는 두 계층 사이의 주소 해석 기능으로 표시합니다.</p>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol" target="_blank" rel="noopener noreferrer">Address Resolution Protocol (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc826.html" target="_blank" rel="noopener noreferrer">RFC826 ↗</a> · <a href="https://www.rfc-editor.org/errata/eid5033" target="_blank" rel="noopener noreferrer">RFC1122 계층 분류 정오표 ↗</a> · <a href="https://www.iana.org/assignments/arp-parameters/" target="_blank" rel="noopener noreferrer">IANA ARP Parameters ↗</a> · <a href="https://www.iana.org/assignments/ieee-802-numbers/#ethernet-numbers" target="_blank" rel="noopener noreferrer">IANA EtherTypes ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

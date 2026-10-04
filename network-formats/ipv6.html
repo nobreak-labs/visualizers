@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="40바이트 IPv6 고정 헤더와 뒤에 이어지는 확장 헤더·데이터 구조입니다." />
+  <title>IPv6 Packet | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="index.html">← 프로토콜 선택</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>IPv6 Packet</h1>
+        <p class="subtitle">40바이트 IPv6 고정 헤더와 뒤에 이어지는 확장 헤더·데이터 구조입니다.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+    <section class="diagram-card" aria-labelledby="diagram-title">
+      <div class="diagram-heading">
+        <div><span class="section-kicker">NETWORK LAYER</span><h2 id="diagram-title">IPv6 고정 헤더</h2></div>
+        <span class="diagram-meta">한 행 32비트 · 비트 / 바이트 오프셋</span>
+      </div>
+      <div class="packet-layout">
+<figure class="packet-example"><figcaption>IPv6 고정 헤더 · 40 B (320 bits)</figcaption><div class="wire-scroll"><div class="packet-grid" style="--packet-columns: 32; --packet-rows: 10; --packet-row-sizes: var(--field-row-height) var(--field-row-height) 28px 28px 28px 28px 28px 28px 28px 28px" role="group" aria-label="IPv6 고정 헤더 · 40 B (320 bits) · 가로 바이트와 비트 · 세로 바이트와 비트 오프셋">
+<span class="packet-axis" style="grid-row:1;grid-column:1">오프셋</span><span class="packet-axis" style="grid-row:1;grid-column:2">바이트</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:3 / span 8">0</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:11 / span 8">1</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:19 / span 8">2</span><span class="packet-axis packet-byte" style="grid-row:1;grid-column:27 / span 8">3</span><span class="packet-axis" style="grid-row:2;grid-column:1">바이트</span><span class="packet-axis" style="grid-row:2;grid-column:2">비트</span><span class="packet-axis" style="grid-row:2;grid-column:3">0</span><span class="packet-axis" style="grid-row:2;grid-column:4">1</span><span class="packet-axis" style="grid-row:2;grid-column:5">2</span><span class="packet-axis" style="grid-row:2;grid-column:6">3</span><span class="packet-axis" style="grid-row:2;grid-column:7">4</span><span class="packet-axis" style="grid-row:2;grid-column:8">5</span><span class="packet-axis" style="grid-row:2;grid-column:9">6</span><span class="packet-axis" style="grid-row:2;grid-column:10">7</span><span class="packet-axis" style="grid-row:2;grid-column:11">8</span><span class="packet-axis" style="grid-row:2;grid-column:12">9</span><span class="packet-axis" style="grid-row:2;grid-column:13">10</span><span class="packet-axis" style="grid-row:2;grid-column:14">11</span><span class="packet-axis" style="grid-row:2;grid-column:15">12</span><span class="packet-axis" style="grid-row:2;grid-column:16">13</span><span class="packet-axis" style="grid-row:2;grid-column:17">14</span><span class="packet-axis" style="grid-row:2;grid-column:18">15</span><span class="packet-axis" style="grid-row:2;grid-column:19">16</span><span class="packet-axis" style="grid-row:2;grid-column:20">17</span><span class="packet-axis" style="grid-row:2;grid-column:21">18</span><span class="packet-axis" style="grid-row:2;grid-column:22">19</span><span class="packet-axis" style="grid-row:2;grid-column:23">20</span><span class="packet-axis" style="grid-row:2;grid-column:24">21</span><span class="packet-axis" style="grid-row:2;grid-column:25">22</span><span class="packet-axis" style="grid-row:2;grid-column:26">23</span><span class="packet-axis" style="grid-row:2;grid-column:27">24</span><span class="packet-axis" style="grid-row:2;grid-column:28">25</span><span class="packet-axis" style="grid-row:2;grid-column:29">26</span><span class="packet-axis" style="grid-row:2;grid-column:30">27</span><span class="packet-axis" style="grid-row:2;grid-column:31">28</span><span class="packet-axis" style="grid-row:2;grid-column:32">29</span><span class="packet-axis" style="grid-row:2;grid-column:33">30</span><span class="packet-axis" style="grid-row:2;grid-column:34">31</span><span class="packet-offset" style="grid-row:3;grid-column:1">0</span><span class="packet-offset" style="grid-row:3;grid-column:2">0</span>
+<span class="packet-offset" style="grid-row:4;grid-column:1">4</span><span class="packet-offset" style="grid-row:4;grid-column:2">32</span>
+<span class="packet-offset" style="grid-row:5;grid-column:1">8</span><span class="packet-offset" style="grid-row:5;grid-column:2">64</span>
+<span class="packet-offset" style="grid-row:6;grid-column:1">12</span><span class="packet-offset" style="grid-row:6;grid-column:2">96</span>
+<span class="packet-offset" style="grid-row:7;grid-column:1">16</span><span class="packet-offset" style="grid-row:7;grid-column:2">128</span>
+<span class="packet-offset" style="grid-row:8;grid-column:1">20</span><span class="packet-offset" style="grid-row:8;grid-column:2">160</span>
+<span class="packet-offset" style="grid-row:9;grid-column:1">24</span><span class="packet-offset" style="grid-row:9;grid-column:2">192</span>
+<span class="packet-offset" style="grid-row:10;grid-column:1">28</span><span class="packet-offset" style="grid-row:10;grid-column:2">224</span>
+<span class="packet-offset" style="grid-row:11;grid-column:1">32</span><span class="packet-offset" style="grid-row:11;grid-column:2">256</span>
+<span class="packet-offset" style="grid-row:12;grid-column:1">36</span><span class="packet-offset" style="grid-row:12;grid-column:2">288</span>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:3 / span 4" title="Internet Protocol Version · 4 bits"><strong>Version</strong><small>4 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:7 / span 8" title="Traffic Class · 1 B · 8 bits"><strong>Traffic Class</strong><small>1 B · 8 bits</small></div>
+<div class="packet-field" style="grid-row:3 / span 1;grid-column:15 / span 20" title="Flow Label · 20 bits"><strong>Flow Label</strong><small>20 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:3 / span 16" title="Payload Length · 2 B · 16 bits"><strong>Payload Length</strong><small>2 B · 16 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:19 / span 8" title="Next Header · 1 B · 8 bits"><strong>Next Header</strong><small>1 B · 8 bits</small></div>
+<div class="packet-field" style="grid-row:4 / span 1;grid-column:27 / span 8" title="Hop Limit · 1 B · 8 bits"><strong>Hop Limit</strong><small>1 B · 8 bits</small></div>
+<div class="packet-field" style="grid-row:5 / span 4;grid-column:3 / span 32" title="Source IPv6 Address · 16 B · 128 bits"><strong>Source Address</strong><small>16 B · 128 bits</small></div>
+<div class="packet-field" style="grid-row:9 / span 4;grid-column:3 / span 32" title="Destination IPv6 Address · 16 B · 128 bits"><strong>Destination Address</strong><small>16 B · 128 bits</small></div>
+</div><div class="packet-tail"><span class="packet-offset">40</span><span class="packet-offset">320</span><div class="packet-tail-field data"><strong>Extension Headers → Upper-layer Data</strong><small>가변 길이</small><span>Next Header로 연결 · 가변 영역 축약</span></div></div></div></figure><div class="field-description-scroll"><table class="field-descriptions"><caption>필드 이름과 역할</caption><thead><tr><th scope="col">필드</th><th scope="col">풀네임</th><th scope="col">크기</th><th scope="col">설명</th></tr></thead><tbody>
+<tr><th scope="row">Version</th><td>Internet Protocol Version</td><td>4 bits</td><td>IPv6에서는 값이 6입니다.</td></tr>
+<tr><th scope="row">Traffic Class</th><td>Traffic Class</td><td>1 B · 8 bits</td><td>상위 6비트는 DSCP, 하위 2비트는 ECN입니다.<ul class="field-values"><li><code>DSCP 0</code> — 기본 전달</li><li><code>DSCP 46</code> — EF — 신속 전달</li><li><code>ECN 0 / 1 / 2 / 3</code> — Not-ECT / ECT(1) / ECT(0) / CE</li></ul></td></tr>
+<tr><th scope="row">Flow Label</th><td>Flow Label</td><td>20 bits</td><td>출발지 주소·목적지 주소와 함께 같은 흐름에 속한 패킷을 식별합니다. 0은 흐름 라벨이 지정되지 않았음을 뜻합니다.</td></tr>
+<tr><th scope="row">Payload Length</th><td>Payload Length</td><td>2 B · 16 bits</td><td>고정 헤더를 제외한 길이로, 확장 헤더도 포함합니다. 점보그램은 0과 Jumbo Payload 옵션을 사용합니다.</td></tr>
+<tr><th scope="row">Next Header</th><td>Next Header</td><td>1 B · 8 bits</td><td>바로 뒤의 확장 헤더 또는 상위 프로토콜을 식별합니다.<ul class="field-values"><li><code>0</code> — Hop-by-Hop Options</li><li><code>6</code> — TCP</li><li><code>17</code> — UDP</li><li><code>43</code> — Routing</li><li><code>44</code> — Fragment</li><li><code>50</code> — ESP</li><li><code>58</code> — ICMPv6</li><li><code>59</code> — No Next Header</li><li><code>60</code> — Destination Options</li></ul></td></tr>
+<tr><th scope="row">Hop Limit</th><td>Hop Limit</td><td>1 B · 8 bits</td><td>라우터가 전달할 때 1씩 감소하는 홉 한도입니다. 전달하려는 패킷의 값이 0이거나 감소 후 0이 되면 폐기합니다.</td></tr>
+<tr><th scope="row">Source Address</th><td>Source IPv6 Address</td><td>16 B · 128 bits</td><td>송신자의 16바이트 IPv6 주소입니다.</td></tr>
+<tr><th scope="row">Destination Address</th><td>Destination IPv6 Address</td><td>16 B · 128 bits</td><td>목적지의 16바이트 IPv6 주소입니다.</td></tr>
+<tr><th scope="row">Extension Headers</th><td>Extension Headers</td><td>가변 길이</td><td>고정 헤더와 상위 계층 사이의 선택적 확장 헤더입니다. Next Header 필드로 연결되며 유형마다 구조가 다릅니다.</td></tr>
+<tr><th scope="row">Data</th><td>Upper-layer Payload</td><td>가변 길이</td><td>TCP, UDP, ICMPv6 등의 메시지입니다. IPv6 고정 헤더 자체에는 체크섬이 없습니다.</td></tr>
+</tbody></table></div>
+      </div>
+      <p class="diagram-source">참고: <a href="https://en.wikipedia.org/wiki/IPv6_packet" target="_blank" rel="noopener noreferrer">IPv6 packet (Wikipedia) ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc8200.html" target="_blank" rel="noopener noreferrer">RFC8200 ↗</a> · <a href="https://www.iana.org/assignments/protocol-numbers/" target="_blank" rel="noopener noreferrer">IANA Protocol Numbers ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc6437.html" target="_blank" rel="noopener noreferrer">RFC6437 · Flow Label ↗</a> · <a href="https://www.rfc-editor.org/rfc/rfc2675.html" target="_blank" rel="noopener noreferrer">RFC2675 · Jumbo Payload ↗</a></p>
+    </section>
+  </main>
+</body>
+</html>

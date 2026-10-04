@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Ethernet부터 HTTP까지 네트워크 메시지의 구조를 살펴보는 시각화 도구" />
+  <title>Network Formats | Nobreak Labs</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <a class="back-link" href="../index.html">← Visualizers</a>
+        <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
+        <h1>Network Formats</h1>
+        <p class="subtitle">프레임, 패킷, 세그먼트, 데이터그램과 애플리케이션 메시지의 구조를 살펴보세요.</p>
+      </div>
+      <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
+    </header>
+
+    <section class="selection-group" aria-labelledby="link-title">
+      <h2 id="link-title">링크 계층과 주소 확인</h2>
+      <div class="selection-grid">
+        <a class="selection-card" href="ethernet.html"><span class="section-kicker">ETHERNET</span><h3>Ethernet II 프레임</h3><p>MAC 주소, EtherType, 페이로드, FCS</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="arp.html"><span class="section-kicker">ARP</span><h3>ARP 메시지</h3><p>IPv4 주소와 MAC 주소의 대응 정보</p><span class="selection-link">구조 보기 →</span></a>
+      </div>
+    </section>
+
+    <section class="selection-group" aria-labelledby="network-title">
+      <h2 id="network-title">네트워크 계층과 제어 메시지</h2>
+      <div class="selection-grid">
+        <a class="selection-card" href="ip.html"><span class="section-kicker">IPv4</span><h3>IPv4 패킷</h3><p>IPv4 기본 헤더의 필드</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="ipv6.html"><span class="section-kicker">IPv6</span><h3>IPv6 패킷</h3><p>IPv6 고정 헤더의 필드</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="icmp.html"><span class="section-kicker">ICMP</span><h3>ICMP 메시지</h3><p>Echo, 도달 불가, MTU·시간 초과 등 주요 메시지</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="icmpv6.html"><span class="section-kicker">ICMPv6</span><h3>ICMPv6 메시지</h3><p>Echo, 도달 불가, MTU·시간 초과 등 주요 메시지</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="ndp.html"><span class="section-kicker">NDP</span><h3>NDP</h3><p>RS, RA, NS, NA, Redirect와 옵션</p><span class="selection-link">구조 보기 →</span></a>
+      </div>
+    </section>
+
+    <section class="selection-group" aria-labelledby="transport-title">
+      <h2 id="transport-title">전송 계층</h2>
+      <div class="selection-grid">
+        <a class="selection-card" href="tcp.html"><span class="section-kicker">TCP</span><h3>TCP 세그먼트</h3><p>포트, 순서 번호, 확인 응답 번호와 제어 플래그</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="udp.html"><span class="section-kicker">UDP</span><h3>UDP 데이터그램</h3><p>포트, 길이와 체크섬</p><span class="selection-link">구조 보기 →</span></a>
+      </div>
+    </section>
+
+    <section class="selection-group" aria-labelledby="application-title">
+      <h2 id="application-title">애플리케이션 메시지</h2>
+      <div class="selection-grid">
+        <a class="selection-card" href="dns.html"><span class="section-kicker">DNS</span><h3>DNS 메시지</h3><p>공통 헤더, 플래그와 리소스 레코드</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="bootp.html"><span class="section-kicker">BOOTP</span><h3>BOOTP 메시지</h3><p>부트스트랩 주소 할당 메시지</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="dhcp.html"><span class="section-kicker">DHCPv4</span><h3>DHCPv4 메시지</h3><p>BOOTP 필드와 DHCP 옵션</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="dhcpv6.html"><span class="section-kicker">DHCPv6</span><h3>DHCPv6 메시지</h3><p>일반·릴레이 메시지와 옵션</p><span class="selection-link">구조 보기 →</span></a>
+        <a class="selection-card" href="http.html"><span class="section-kicker">HTTP/1.1</span><h3>HTTP 메시지</h3><p>요청·응답, 메서드와 상태 코드</p><span class="selection-link">구조 보기 →</span></a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
