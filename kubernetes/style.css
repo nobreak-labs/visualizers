@@ -49,6 +49,9 @@ h1 { margin: 6px 0 0; font-size: clamp(27px, 3vw, 43px); line-height: 1.1; lette
 .cluster-title { display: flex; align-items: center; gap: 9px; margin-bottom: 14px; color: var(--accent); font-size: 10px; font-weight: 900; letter-spacing: .14em; }
 .cluster-symbol { width: 44px; height: 44px; object-fit: contain; }
 .cluster-count { margin-left: auto; color: var(--muted); font-size: 9px; letter-spacing: .08em; }
+[data-group] { cursor: pointer; }
+.group-select { padding: 0; border: 0; background: transparent; text-align: left; }
+.group-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .area-box { border: 1px solid rgba(139,156,255,.3); border-radius: 13px; background: rgba(139,156,255,.035); }
 .cluster-boundary.focused-area { border-width: 2px; border-color: rgba(94,230,168,.82); box-shadow: 0 0 0 2px rgba(94,230,168,.12), 0 0 26px rgba(94,230,168,.1); }
 .control-plane.focused-area, .ha-control-plane.focused-area { border-width: 2px; border-color: rgba(139,156,255,.82); box-shadow: 0 0 0 2px rgba(139,156,255,.12), 0 0 26px rgba(139,156,255,.1); }

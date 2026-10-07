@@ -13,10 +13,10 @@
   <main class="app-shell">
     <header class="topbar">
       <div>
-        <a class="back-link" href="../index.html">← Visualizers</a>
+        <a class="back-link" href="../">← Visualizers</a>
         <p class="eyebrow">INTERACTIVE LEARNING LAB</p>
         <h1>Kubernetes Architecture</h1>
-        <p class="subtitle">방향키로 화면을 넘기고, 단일 구성에서는 구성요소를 클릭해 클러스터의 동작을 살펴보세요.</p>
+        <p class="subtitle">방향키로 화면을 넘기고, 영역 박스나 단일 구성의 구성요소를 클릭해 클러스터의 동작을 살펴보세요.</p>
       </div>
       <div class="topbar-side">
         <button class="theme-toggle" data-theme-toggle type="button">☀ 라이트 모드</button>
@@ -48,10 +48,10 @@
             <div class="external-cloud"><button class="component entry-card cloud-provider-card" data-component="provider" data-anchor="provider" type="button"><span><strong>Cloud provider API</strong><small>클러스터 외부 인프라</small></span></button></div>
           </div>
 
-          <div class="cluster-boundary">
-            <div class="cluster-title"><img class="cluster-symbol" src="icons/kubernetes.svg" alt="" aria-hidden="true" /><span>KUBERNETES CLUSTER</span><span class="cluster-count" id="clusterCount">1 CONTROL PLANE · 2 NODES</span></div>
-            <div class="control-plane area-box" id="singleControlPlane">
-              <div class="area-header"><span class="area-label">CONTROL PLANE</span></div>
+          <div class="cluster-boundary" data-group="overview">
+            <button class="cluster-title group-select" data-group="overview" type="button" aria-pressed="false"><img class="cluster-symbol" src="icons/kubernetes.svg" alt="" aria-hidden="true" /><span>KUBERNETES CLUSTER</span><span class="cluster-count" id="clusterCount">1 CONTROL PLANE · 2 NODES</span></button>
+            <div class="control-plane area-box" id="singleControlPlane" data-group="control-plane-group">
+              <div class="area-header"><button class="area-label group-select" data-group="control-plane-group" type="button" aria-pressed="false">CONTROL PLANE</button></div>
               <div class="cp-grid">
                 <button class="component cp-primary" data-component="apiserver" data-anchor="apiserver" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong><small>모든 요청의 관문</small></button>
                 <button class="component" data-component="etcd" data-anchor="etcd" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd</strong><small>클러스터 상태 저장</small></button>
@@ -60,8 +60,8 @@
                 <button class="component optional cp-cloud" data-component="cloud" data-anchor="cloud-single" type="button"><img class="official-icon" src="icons/cloud-controller-manager.svg" alt="" aria-hidden="true" /><strong>cloud-controller-manager</strong><small>클라우드 연동 · 선택</small></button>
               </div>
             </div>
-            <div class="ha-control-plane area-box" id="haControlPlane" hidden>
-              <div class="area-header"><span class="area-label">HA CONTROL PLANE · 3 INSTANCES</span><span class="area-subtitle" id="haSubtitle">각 컨트롤 플레인에 etcd 멤버 배치</span></div>
+            <div class="ha-control-plane area-box" id="haControlPlane" data-group="control-plane-group" hidden>
+              <div class="area-header"><button class="area-label group-select" data-group="control-plane-group" type="button" aria-pressed="false">HA CONTROL PLANE · 3 INSTANCES</button><span class="area-subtitle" id="haSubtitle">각 컨트롤 플레인에 etcd 멤버 배치</span></div>
               <button class="component ha-load-balancer" data-component="api-lb" data-anchor="api-lb" type="button"><span class="component-glyph text-badge">LB</span><strong>API load balancer</strong><small>controlPlaneEndpoint · :6443</small></button>
               <div class="ha-members">
                 <article class="ha-member" aria-label="Control Plane 1"><div class="ha-member-heading"><span class="node-indicator"></span><strong>Control Plane 1</strong></div><button class="component" data-component="apiserver" data-anchor="apiserver-1" type="button"><img class="official-icon" src="icons/api.svg" alt="" aria-hidden="true" /><strong>kube-apiserver</strong></button><button class="component" data-component="scheduler" data-anchor="scheduler-1" type="button"><img class="official-icon" src="icons/scheduler.svg" alt="" aria-hidden="true" /><strong>kube-scheduler</strong></button><button class="component" data-component="controller" data-anchor="controller-1" type="button"><img class="official-icon" src="icons/controller-manager.svg" alt="" aria-hidden="true" /><strong>kube-controller-manager</strong></button><button class="component optional ha-cloud" data-component="cloud" data-anchor="cloud-1" type="button"><img class="official-icon" src="icons/cloud-controller-manager.svg" alt="" aria-hidden="true" /><strong>cloud-controller-manager</strong><small>클라우드 연동 · 선택</small></button><button class="component ha-stacked-etcd" data-component="etcd" data-anchor="etcd-stack-1" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 1</strong></button></article>
@@ -72,9 +72,9 @@
             </div>
             <div class="etcd-cluster" id="externalEtcdCluster" hidden><div class="etcd-heading"><span class="area-label">EXTERNAL ETCD CLUSTER</span></div><div class="etcd-members"><button class="component" data-component="etcd" data-anchor="etcd-1" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 1</strong></button><button class="component" data-component="etcd" data-anchor="etcd-2" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 2</strong></button><button class="component" data-component="etcd" data-anchor="etcd-3" type="button"><img class="official-icon" src="icons/etcd.svg" alt="" aria-hidden="true" /><strong>etcd 3</strong></button></div><span class="etcd-meta">3 MEMBERS · QUORUM 2/3</span></div>
 
-            <div class="node-section-heading"><span class="area-label">WORKER NODES</span></div>
-            <div class="nodes">
-              <article class="worker-node area-box" aria-label="Worker Node A">
+            <div class="node-section-heading"><button class="area-label group-select" data-group="worker-nodes-group" type="button" aria-pressed="false">WORKER NODES</button></div>
+            <div class="nodes" data-group="worker-nodes-group">
+              <article class="worker-node area-box" data-group="worker-nodes-group" aria-label="Worker Node A">
                 <div class="node-header"><strong>Worker Node A</strong></div>
                 <div class="node-components">
                   <button class="component" data-component="kubelet" data-anchor="kubelet-a" type="button"><img class="official-icon" src="icons/kubelet.svg" alt="" aria-hidden="true" /><strong>kubelet</strong><small>Pod 실행 상태 관리</small></button>
@@ -87,7 +87,7 @@
                   <div class="pod-row"><button class="component pod" data-component="pod" data-anchor="pod-a1" type="button"><img class="official-icon pod-icon" src="icons/pod.svg" alt="" aria-hidden="true" /><strong>Pod</strong><small>app container</small></button><button class="component pod" data-component="pod" data-anchor="pod-a2" type="button"><img class="official-icon pod-icon" src="icons/pod.svg" alt="" aria-hidden="true" /><strong>Pod</strong><small>app container</small></button></div>
                 </div>
               </article>
-              <article class="worker-node area-box" aria-label="Worker Node B">
+              <article class="worker-node area-box" data-group="worker-nodes-group" aria-label="Worker Node B">
                 <div class="node-header"><strong>Worker Node B</strong></div>
                 <div class="node-components">
                   <button class="component" data-component="kubelet" data-anchor="kubelet-b" type="button"><img class="official-icon" src="icons/kubelet.svg" alt="" aria-hidden="true" /><strong>kubelet</strong><small>Pod 실행 상태 관리</small></button>

@@ -696,6 +696,9 @@ function showSlide(index, revealInspector = false, preserveTopology = false, anc
   stage.classList.toggle("has-selection", slide.key !== "overview" && !topologySlide);
   stage.classList.toggle("topology-focus", topologySlide);
   document.querySelector(".cluster-boundary").classList.toggle("focused-area", slide.key === "overview");
+  document.querySelectorAll("button[data-group]").forEach(button => {
+    button.setAttribute("aria-pressed", String(button.dataset.group === slide.key));
+  });
   document.querySelectorAll(".control-plane, .ha-control-plane, .worker-node").forEach(area => {
     const group = area.matches(".worker-node") ? "worker-nodes-group" : "control-plane-group";
     area.classList.toggle("focused-area", slide.key === group || topologySlide && area.matches(".ha-control-plane"));
@@ -739,7 +742,7 @@ function showSlide(index, revealInspector = false, preserveTopology = false, anc
   }
   document.getElementById("inspectorDescription").textContent = description;
   document.getElementById("inspectorRelation").textContent = relation;
-  document.getElementById("inspectorHint").textContent = slide.key === "overview" ? "방향키 또는 카드 클릭으로 탐색" : `${slide.title} 선택됨 · 방향키로 다음 화면`;
+  document.getElementById("inspectorHint").textContent = slide.key === "overview" ? "방향키 또는 영역·카드 클릭으로 탐색" : `${slide.title} 선택됨 · 방향키로 다음 화면`;
   inspector.style.animation = "none";
   void inspector.offsetWidth;
   inspector.style.animation = "";
@@ -781,6 +784,13 @@ document.querySelectorAll("[data-component]").forEach(component => component.add
   if (topology !== "single") return;
   showSlide(slides().findIndex(slide => slide.key === component.dataset.component), true, false, component.dataset.anchor);
 }));
+stage.addEventListener("click", event => {
+  if (event.target.closest("[data-component]")) return;
+  const group = event.target.closest("[data-group]");
+  if (!group) return;
+  const index = slides().findIndex(slide => slide.key === group.dataset.group);
+  if (index >= 0) showSlide(index, true);
+});
 document.getElementById("prevSlide").addEventListener("click", () => showSlide(currentSlide - 1));
 document.getElementById("nextSlide").addEventListener("click", () => showSlide(currentSlide + 1));
 document.addEventListener("keydown", event => {
