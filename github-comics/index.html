@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="만화와 체험으로 배우는 GitHub 협업과 버전 관리" />
+  <title>깃허브 만화 교실</title>
+  <script src="../assets/js/theme.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Do+Hyeon&family=JetBrains+Mono:wght@500;700&display=swap" />
+  <link rel="stylesheet" href="../assets/css/common.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="p-a" viewBox="0 0 100 120">
+      <path d="M16 120 C16 88 34 78 50 78 C66 78 84 88 84 120 Z" fill="var(--shirt)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="50" cy="52" r="27" fill="#f3cfae" stroke="var(--ink)" stroke-width="4"/>
+      <path d="M22 50 C20 22 42 14 58 18 C76 22 82 36 78 52 C68 42 52 38 36 36 C30 40 25 44 22 50Z" fill="var(--hair)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="40" cy="56" r="3.2" fill="#1b2340"/><circle cx="60" cy="56" r="3.2" fill="#1b2340"/>
+      <path d="M42 67 Q50 74 58 67" fill="none" stroke="#1b2340" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="p-b" viewBox="0 0 100 120">
+      <path d="M20 66 C14 30 30 14 50 14 C70 14 86 30 80 66 L80 86 L20 86Z" fill="var(--hair)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M16 120 C16 88 34 78 50 78 C66 78 84 88 84 120 Z" fill="var(--shirt)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="50" cy="52" r="26" fill="#f3cfae" stroke="var(--ink)" stroke-width="4"/>
+      <path d="M24 48 C26 30 40 24 52 26 C66 26 76 34 76 48 C64 40 44 38 24 48Z" fill="var(--hair)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="40" cy="57" r="3.2" fill="#1b2340"/><circle cx="60" cy="57" r="3.2" fill="#1b2340"/>
+      <path d="M43 67 Q50 73 57 67" fill="none" stroke="#1b2340" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="p-c" viewBox="0 0 100 120">
+      <path d="M16 120 C16 88 34 78 50 78 C66 78 84 88 84 120 Z" fill="var(--shirt)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="50" cy="52" r="27" fill="#f3cfae" stroke="var(--ink)" stroke-width="4"/>
+      <path d="M22 46 L26 22 L38 32 L46 14 L56 30 L68 18 L74 34 L80 24 L78 46 C66 38 38 38 22 46Z" fill="var(--hair)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <circle cx="40" cy="56" r="3.2" fill="#1b2340"/><circle cx="60" cy="56" r="3.2" fill="#1b2340"/>
+      <path d="M42 66 Q50 75 58 66 Z" fill="#fff" stroke="#1b2340" stroke-width="3" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="p-ai" viewBox="0 0 100 120">
+      <path d="M16 120 C16 92 32 82 50 82 C68 82 84 92 84 120 Z" fill="var(--shirt)" stroke="var(--ink)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M50 14 L50 28" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="50" cy="12" r="6" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4"/>
+      <rect x="20" y="28" width="60" height="50" rx="14" fill="#dfe6ff" stroke="var(--ink)" stroke-width="4"/>
+      <rect x="32" y="45" width="10" height="12" rx="3" fill="#1b2340"/><rect x="58" y="45" width="10" height="12" rx="3" fill="#1b2340"/>
+      <path d="M40 66 L60 66" stroke="#1b2340" stroke-width="3.5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="wrap">
+  <div class="page-toolbar">
+    <a class="back-link" href="../index.html">← Visualizers</a>
+    <button class="theme-toggle" data-theme-toggle type="button">☾ 다크 모드</button>
+  </div>
+  <nav class="nav" aria-label="에피소드 메뉴"><div class="nav-in" id="nav"></div></nav>
+
+<!-- 히어로 -->
+<section class="hero" id="top">
+  <div>
+    <div class="kicker">IT 엔지니어를 위한 협업 가이드 · 만화판</div>
+    <h1>우리 팀은 왜<br><mark>깃허브</mark>를 쓸까?</h1>
+    <p class="lead">같이 개발한 코드가 자꾸 꼬이던 팀이 있었어요. 이 만화를 끝까지 넘기면 깃허브가 무슨 일을 해 주는지, 협업은 어떻게 흘러가는지 알게 돼요. 명령어는 외우지 않아도 돼요. AI가 대신 쳐 줘요.</p>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="bubble r"><b>또 덮어썼어?!</b> 내 수정은 어디 갔어…</div>
+    <div class="row">
+      <svg class="fig c-minji" viewBox="0 0 100 120"><use href="#p-a"/></svg>
+      <svg class="fig c-junho" viewBox="0 0 100 120"><use href="#p-c"/></svg>
+      <svg class="fig c-seoyeon" viewBox="0 0 100 120"><use href="#p-b"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 1화 -->
+<section class="ep" id="ep1">
+  <header class="ep-h">
+    <span class="ep-n">1화</span>
+    <h2>코드가 자꾸 꼬이는 이유</h2>
+    <p class="lede">엔지니어 둘이 같은 코드를 고치면 어떤 일이 벌어질까요? 네 컷으로 먼저 보고, 아래 버튼으로 직접 해 봐요.</p>
+  </header>
+
+  <div class="strip">
+    <div class="panel">
+      <span class="cap">컷 1 · 월요일</span>
+      <div class="bubble"><b>민지:</b> 코드 올렸어요! 메신저 확인해 주세요.</div>
+      <div class="files"><span class="file">app.js</span><span class="file">app_final.js</span><span class="file hot">app_final_really.js</span><span class="file">app_final_v2.js</span></div>
+      <div class="scene"><svg class="fig c-minji" viewBox="0 0 100 120"><use href="#p-a"/></svg></div>
+    </div>
+    <div class="panel">
+      <span class="cap">컷 2 · 화요일</span>
+      <div class="bubble"><b>준호:</b> 저도 고쳤어요. 근데 이게 최신 맞아요?</div>
+      <div class="bubble think r">…어느 파일이 진짜 최종이지?</div>
+      <div class="scene"><svg class="fig c-junho" viewBox="0 0 100 120"><use href="#p-c"/></svg><span class="sfx">갸웃?</span></div>
+    </div>
+    <div class="panel">
+      <span class="cap">컷 3 · 수요일</span>
+      <div class="bubble"><b>민지:</b> 내가 고친 오타가 다시 돌아왔어요!</div>
+      <div class="scene"><svg class="fig c-minji" viewBox="0 0 100 120"><use href="#p-a"/></svg><span class="sfx">덮어씀!</span><svg class="fig c-junho" viewBox="0 0 100 120"><use href="#p-c"/></svg></div>
+    </div>
+    <div class="panel">
+      <span class="cap">컷 4 · 목요일</span>
+      <div class="bubble"><b>서연 팀장:</b> 깃허브로 변경을 비교하고 합치면 이런 일을 줄일 수 있어요.</div>
+      <div class="scene"><svg class="fig c-seoyeon" viewBox="0 0 100 120"><use href="#p-b"/></svg><span class="sfx" style="color:var(--green)">해결!</span></div>
+    </div>
+  </div>
+
+  <div class="play" id="d1">
+    <div class="play-t"><span class="tag">직접 해 보기</span><h3>둘이 동시에 같은 코드를 고치면?</h3></div>
+    <div class="seg" role="group" aria-label="작업 방식 선택">
+      <button type="button" data-m="old" aria-pressed="true">메신저로 파일 주고받기</button>
+      <button type="button" data-m="git" aria-pressed="false">깃허브 쓰기</button>
+    </div>
+    <div class="docs">
+      <div class="doc a"><h4>민지 컴퓨터</h4><ul id="d1a"></ul></div>
+      <div class="doc b"><h4>준호 컴퓨터</h4><ul id="d1b"></ul></div>
+      <div class="doc r"><h4 id="d1rt">공유된 코드</h4><ul id="d1r"></ul></div>
+    </div>
+    <div class="btns"><button type="button" class="btn" id="d1go">둘이 동시에 고치고 저장!</button><button type="button" class="btn alt" id="d1re">처음으로</button></div>
+    <p class="msg" id="d1msg" aria-live="polite"></p>
+  </div>
+
+  <div class="why">
+    <div><b>최신본이 딱 하나</b><span>파일 이름에 '최종'을 붙일 일이 없어요.</span></div>
+    <div><b>동시에 고쳐도 안전</b><span>서로 다른 곳을 고치면 깃이 알아서 합쳐 줘요.</span></div>
+    <div><b>기록이 남아요</b><span>누가, 언제, 왜 바꿨는지 전부 보여요.</span></div>
+    <div><b>실수해도 되돌려요</b><span>지워도, 망쳐도 어제 상태로 돌아갈 수 있어요.</span></div>
+    <div><b>공유가 쉬워요</b><span>코드와 문서, 설정 파일을 팀이 한곳에서 관리해요.</span></div>
+    <div><b>신입도 바로 합류</b><span>저장소만 열면 지금까지의 역사가 다 있어요.</span></div>
+  </div>
+</section>
+
+<!-- 2화 -->
+<section class="ep" id="ep2">
+  <header class="ep-h">
+    <span class="ep-n">2화</span>
+    <h2>저장소와 커밋은 게임 세이브</h2>
+    <p class="lede">깃과 깃허브는 다른 거예요. 먼저 둘을 구분하고, 세이브 포인트(커밋)를 눌러 시간여행을 해 봐요.</p>
+  </header>
+
+  <div class="vs">
+    <div class="panel">
+      <span class="cap">깃 (Git)</span>
+      <div class="bubble"><b>내 컴퓨터 안의 타임머신.</b> 파일이 바뀔 때마다 기록해 두는 프로그램이에요.</div>
+      <div class="scene"><svg class="fig c-minji" viewBox="0 0 100 120"><use href="#p-a"/></svg><span class="sfx">저장!</span></div>
+    </div>
+    <div class="panel">
+      <span class="cap">깃허브 (GitHub)</span>
+      <div class="bubble r"><b>그 기록을 올려 두는 웹사이트.</b> 팀이 함께 보고, 이슈와 PR로 대화하는 곳이에요.</div>
+      <div class="scene"><svg class="fig c-junho" viewBox="0 0 100 120"><use href="#p-c"/></svg><span class="sfx" style="color:var(--blue)">공유!</span></div>
+    </div>
+  </div>
+
+  <div class="play" id="d2">
+    <div class="play-t"><span class="tag">직접 해 보기</span><h3>세이브를 쌓고, 옛날 세이브를 열어 보기</h3></div>
+    <div class="btns"><button type="button" class="btn" id="d2add">커밋(세이브) 하기</button><button type="button" class="btn alt" id="d2re">처음으로</button></div>
+    <div class="timeline" id="d2tl" role="group" aria-label="커밋 목록"></div>
+    <div class="preview"><h4 id="d2pt"></h4><ul id="d2pl"></ul></div>
+    <p class="msg" id="d2msg" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- 3화 -->
+<section class="ep" id="ep3">
+  <header class="ep-h">
+    <span class="ep-n">3화</span>
+    <h2>브랜치는 복사본 갈래</h2>
+    <p class="lede"><b>main</b>은 모두가 보는 완성본이에요. 새 기능이나 수정은 main에서 갈라진 <b>브랜치</b>에서 하고, 다 끝나면 합쳐요(merge).</p>
+  </header>
+
+  <div class="strip">
+    <div class="panel">
+      <span class="cap">컷 1</span>
+      <div class="bubble"><b>준호:</b> main을 직접 고치다 망치면 어쩌죠?</div>
+      <div class="scene"><svg class="fig c-junho" viewBox="0 0 100 120"><use href="#p-c"/></svg></div>
+    </div>
+    <div class="panel">
+      <span class="cap">컷 2</span>
+      <div class="bubble r"><b>서연:</b> 복사본 갈래(브랜치)를 만들어서 거기서 실험하세요!</div>
+      <div class="scene"><svg class="fig c-seoyeon" viewBox="0 0 100 120"><use href="#p-b"/></svg><span class="sfx">쓱!</span></div>
+    </div>
+    <div class="panel">
+      <span class="cap">컷 3</span>
+      <div class="bubble"><b>준호:</b> 망쳐도 main은 그대로네요. 마음 편해요.</div>
+      <div class="scene"><svg class="fig c-junho" viewBox="0 0 100 120"><use href="#p-c"/></svg><svg class="fig c-minji" viewBox="0 0 100 120"><use href="#p-a"/></svg></div>
+    </div>
+  </div>
+
+  <div class="play" id="d3">
+    <div class="play-t"><span class="tag">직접 해 보기</span><h3>브랜치를 만들고, 작업하고, 합치기</h3></div>
+    <div class="btns">
+      <button type="button" class="btn blue" id="d3br">1. 브랜치 만들기</button>
+      <button type="button" class="btn coral" id="d3bw">2. 브랜치에서 작업(커밋)</button>
+      <button type="button" class="btn alt" id="d3mw">main에서 다른 사람이 작업</button>
+      <button type="button" class="btn purple" id="d3mg">3. 합치기(merge)</button>
+      <button type="button" class="btn alt" id="d3re">처음으로</button>
+    </div>
+    <div class="graph"><svg id="d3svg" role="img" aria-label="커밋과 브랜치를 보여 주는 그림"></svg></div>
+    <p class="msg" id="d3msg" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- 4화 -->
+<section class="ep" id="ep4">
+  <header class="ep-h">
+    <span class="ep-n">4화</span>
+    <h2>이슈에서 머지까지, 팀이 일하는 길</h2>
+    <p class="lede">프로젝트 README의 오타 하나를 고치는 과정을 따라가요. 단계를 눌러 보세요. 오른쪽에는 실제 깃허브 화면 느낌의 그림이 나와요.</p>
+  </header>
+  <div class="play" id="d4" style="margin-top:0">
+    <div class="steps" id="d4steps" role="tablist" aria-label="협업 단계"></div>
+    <div class="flow-body">
+      <div class="panel" id="d4panel"></div>
+      <div class="gh" id="d4ui"></div>
+    </div>
+    <div class="stepper">
+      <button type="button" class="btn alt" id="d4prev">◀ 이전</button>
+      <button type="button" class="btn" id="d4next">다음 단계 ▶</button>
+    </div>
+    <p class="note" id="d4note"></p>
+  </div>
+</section>
+
+<!-- 5화 -->
+<section class="ep" id="ep5">
+  <header class="ep-h">
+    <span class="ep-n">5화</span>
+    <h2>충돌: 같은 줄을 동시에 고치면</h2>
+    <p class="lede">config.js의 요청 제한 시간을 민지는 3초, 준호는 5초로 바꿨어요. 같은 줄을 다르게 고치면 충돌이 생겨요. 팀의 요구사항을 확인하고 어떤 값을 쓸지 정해요.</p>
+  </header>
+  <div class="play" id="d5" style="margin-top:0">
+    <div class="play-t"><span class="tag">직접 해 보기</span><h3>요청 제한 시간 설정, 어떤 값으로 할까?</h3></div>
+    <div class="versions">
+      <div class="ver"><h4 style="color:var(--blue)">main (민지가 먼저 합친 것)</h4><q>const timeoutMs = 3000;</q></div>
+      <div class="ver"><h4 style="color:var(--coral)">fix/timeout (준호의 브랜치)</h4><q>const timeoutMs = 5000;</q></div>
+    </div>
+    <div class="code" id="d5code" aria-live="polite"></div>
+    <div class="btns">
+      <button type="button" class="btn blue" data-pick="a">민지 걸로</button>
+      <button type="button" class="btn coral" data-pick="b">준호 걸로</button>
+      <button type="button" class="btn alt" data-pick="c">새 값으로 조정하기 (예: 4초)</button>
+      <button type="button" class="btn alt" data-pick="x">처음으로</button>
+    </div>
+    <p class="msg" id="d5msg" aria-live="polite"></p>
+  </div>
+</section>
+
+<!-- 6화 -->
+<section class="ep" id="ep6">
+  <header class="ep-h">
+    <span class="ep-n">6화</span>
+    <h2>깃 명령어는 AI가 대신 쳐 줘요</h2>
+    <p class="lede">우리는 "무엇을 하고 싶은지"만 말해요. AI가 알맞은 깃 명령을 실행하고, 무슨 일을 했는지 설명해 줘요. 아래 말풍선을 눌러 보세요.</p>
+  </header>
+  <div class="play" id="d6" style="margin-top:0">
+    <div class="ai">
+      <div class="presets" id="d6p" role="group" aria-label="AI에게 할 말"></div>
+      <div class="chat" id="d6c" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 용어 -->
+<section class="ep" id="ep7">
+  <header class="ep-h">
+    <span class="ep-n">정리</span>
+    <h2>용어 한 장 정리</h2>
+    <p class="lede">처음엔 비유로 기억하면 충분해요.</p>
+  </header>
+  <dl class="gloss">
+    <div><dt>repository (저장소)</dt><dd>프로젝트 폴더 + 모든 변경 기록<small>코드·문서·설정 파일이 함께 사는 집</small></dd></div>
+    <div><dt>commit (커밋)</dt><dd>게임 세이브 포인트<small>"무엇을 바꿨는지" 메시지와 함께 저장</small></dd></div>
+    <div><dt>push / pull</dt><dd>올리기 / 내려받기<small>내 컴퓨터와 깃허브를 맞추는 일</small></dd></div>
+    <div><dt>branch (브랜치)</dt><dd>main에서 갈라진 복사본 갈래<small>망쳐도 main은 안전</small></dd></div>
+    <div><dt>issue (이슈)</dt><dd>할 일과 문제를 적는 게시판 글<small>"README 실행 명령 오타 수정"</small></dd></div>
+    <div><dt>pull request (PR)</dt><dd>"내 브랜치를 main에 합쳐도 될까요?" 요청서<small>합치기 전에 동료가 검사해요</small></dd></div>
+    <div><dt>review (리뷰)</dt><dd>동료의 검사와 의견<small>승인(Approve)하면 합칠 준비 완료</small></dd></div>
+    <div><dt>merge (머지)</dt><dd>갈래를 main에 합치기<small>PR의 마지막 버튼</small></dd></div>
+    <div><dt>conflict (충돌)</dt><dd>같은 줄을 서로 다르게 고친 상태<small>사람이 어느 쪽으로 할지 고르면 끝</small></dd></div>
+  </dl>
+  <p class="foot">깃허브는 혼자 잘하려는 도구가 아니라, 같이 잘하려는 도구예요.</p>
+</section>
+
+</main>
+<script src="app.js"></script>
+</body>
+</html>
